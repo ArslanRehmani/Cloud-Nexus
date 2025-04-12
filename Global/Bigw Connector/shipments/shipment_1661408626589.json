@@ -1,0 +1,1 @@
+{"shipment":[{"carrier_name":"AUS","consignment_number":"consAUBW357819470_0","no_of_parcels":1,"shipment_lines":{"shipment_line":[{"order_line_id":3,"product_code":"121013","rejected_quantity":0,"shipped_quantity":1}]},"shipped_date":"2022-08-25 09:48:00","tracking_number":"3368R5000015","tracking_url":"https://auspost.com.au/mypost/track/#/details/3368R5000015"}]}

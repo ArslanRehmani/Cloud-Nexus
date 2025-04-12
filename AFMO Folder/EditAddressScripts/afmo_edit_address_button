@@ -1,0 +1,35 @@
+/**
+ * Copyright (c) 1998-2020 NetSuite, Inc.
+ * 2955 Campus Drive, Suite 100, San Mateo, CA, USA 94403-2511
+ * All Rights Reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * NetSuite, Inc. ("Confidential Information"). You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with NetSuite.
+ 
+     Author:        NetSuite ProBono
+     Company:       NetSuite, Inc.
+     Date:          March 3, 2020
+     Version:       V1
+     Details:       Client Script for the custom action which brings
+                    up the edit address field in the donor form.
+*   
+*/
+
+/*
+ * Client script function for AMFO Edit Address button
+ */
+function amfoEditAddressButton(){
+	// Insert a new line and set the default billing and default shipping flags
+	// Edit the address for that line
+	var lineIndex = 1;
+	nlapiInsertLineItem('addressbook', lineIndex);
+	nlapiSetCurrentLineItemValue('addressbook', 'defaultshipping', 'T');
+	nlapiSetCurrentLineItemValue('addressbook', 'defaultbilling', 'T');
+
+	NLShowAddressChildRecordPopup('addressbook', 'addressbookaddressaddress',
+		false, '/app/common/address/address.nl', this, lineIndex,
+		{width: 1000, height: 700}, 'addressbook', 'addressbookaddress');
+}

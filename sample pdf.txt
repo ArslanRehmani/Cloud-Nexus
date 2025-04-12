@@ -1,0 +1,170 @@
+<!-- I think this is based on https://bfo.com/ -->
+<pdf>
+<head>
+<meta name="author" value="Global Fitness and Leisure"/>
+<meta name="title" value="GFL Service Terms and Conditions"/>
+<meta name="subject" value="GFL Service Terms and Conditions"/>
+<meta name="layout" value="one-column"/>
+<link type="stylesheet" src="https://nsopen.s3-ap-southeast-2.amazonaws.com/bfo/gfl_job_card_bfo_style.css"/>
+<style>
+h2 {margin-bottom: 8}
+</style>
+</head>
+<body size="A4" font-size="9">
+<div align="center">
+<img src="https://nsopen.s3-ap-southeast-2.amazonaws.com/bfo/GFL.jpg"/>
+</div>
+<h1 align="center">GFL Service Terms and Conditions</h1>
+<h2>The following Terms and Conditions are binding to you (the Customer) and apply to the proposed Service. Your consent to proceed with the Service is an acknowledgement that you have read and understood these Terms and Conditions.</h2>
+<div>
+<p>1. The Customer provides consent for GFL technician(s) to enter the Customer’s premises.</p>
+<p>2. The Service can only be completed on the ground floor with level access. Upstairs, downstairs, and difficult to accessareas may require two people and special arrangements must be made. Additional fees will apply at GFL’s discretion.</p>
+<p>3. The Customer accepts responsibility that, prior to the commencement of the works, all furniture and belongings areremoved from the area of the Service and any carpet in the Service area is rolled back.</p>
+<p>4. GFL technicians take great care with your property, however, GFL will accept no responsibility for loss of, theft of, ordamage to goods or damage caused to your home during the course of the Service.</p>
+<p>5. The Customer accepts responsibility to keep the Service area free from any children, pets or obstacles that couldinterfere with the Service or cause a safety hazard.</p>
+<p>6. GFL will leave the work area in the same state as when they arrived. All product packaging will be placed in one agreedlocation on the property. If prior arrangements have been made to order a skip, the GFL technician(s) will place allproduct packaging in said skip providing it is located within 4 metres of the property.</p>
+</div>
+<h2>Fees</h2>
+<div>
+<p>7. A minimum initial callout fee of $150 applies to any work unless otherwise agreed on. This includes 60 minutes of labour. An additional fee of $80 applies for every 30 minutes thereafter.</p>
+<p>8. Any work covered by warranty will include parts and labour. However, the minimum callout fee will apply unlessotherwise agreed on.</p>
+<p>9. Any additional parts that are required, and are not covered by warranty, will incur additional charges including the labourcost to fit the additional parts.</p>
+<p>10. All fees are payable whatever the outcome of the works undertaken.</p>
+</div>
+<h2>Booking</h2>
+<div>
+<p>11. Any Service request will be made by appointment between 10:00am to 3:00pm Monday to Friday, excluding publicholidays.</p>
+<p>12. All Services are only available to the Melbourne and Sydney Metropolitan area.</p>
+<p>13. At the completion of the job The Customer will be asked to sign a Service Sign Off Form attesting to the satisfactorycompletion of works.</p>
+<p>14. Any cancellations or changes to the appointment time must be made 24 hours prior, so we can reallocate yourtechnicians schedule and support other clients. Failure to do so could result in the initial call out fee being applicable</p>
+</div>
+<h2>Description of Service</h2>
+<div>
+<p>15.The Service visit has been scheduled based on your communication with GFL, and the scope of works outlined below.Any additional requests or requirements beyond the below scope may not be addressed during the Service as it mayconflict with our commitments to other customers who have booked Services for the same calendar day. If the Customerrequirements have not been fully addressed in this visit, they should contact GFL immediately.</p>
+</div>
+<h2>Scope of Works</h2>
+<p>${customrecord.custrecord_gfl_job_card_scope}</p>
+
+<P margin-top="10">By accepting these Terms and Conditions, The Customer provides consent for GFL to book your Service. The Customer also agrees that any variances from a standard professional Service (outlined above) will be The Customer’s financial responsibility.</P>
+
+<div class="${action}">
+<pbr/>
+<h2 align="right">*</h2>
+<h1 align="center">GFL Service Form</h1>
+
+<table class="recordtable" width="100%" border="1" margin-bottom="20">
+<tr>
+<td border-bottom="1" border-right="1" width="15%">ID</td>
+<td border-bottom="1" border-right="1" width="35%">${customrecord.name}</td>
+<td border-bottom="1" rowspan="5" border-right="1" width="5%">ADDRESS</td>
+<td border-bottom="1" rowspan="5" width="45%">${customrecord.custrecord_gfl_job_card_address}</td>
+</tr>
+<tr>
+<td border-bottom="1" border-right="1" width="15%">TYPE</td>
+<td border-bottom="1" border-right="1" width="35%">${customrecord.custrecord_gfl_job_card_type}</td>
+</tr>
+<tr>
+<td border-bottom="1" border-right="1" width="15%">DATE TIME</td>
+<td border-bottom="1" border-right="1" width="35%">${customrecord.custrecord_gfl_job_card_date} ${customrecord.custrecord_gfl_job_card_time}</td>
+</tr>
+<tr>
+<td border-bottom="1" border-right="1">NAME</td>
+<td border-bottom="1" border-right="1">
+<#if customrecord.custrecord_gfl_job_card_customer.firstname?has_content>
+${customrecord.custrecord_gfl_job_card_customer.firstname}
+</#if>
+<#if customrecord.custrecord_gfl_job_card_customer.lastname?has_content>
+${" " + customrecord.custrecord_gfl_job_card_customer.lastname}
+</#if>
+</td>
+</tr>
+<tr>
+<td border-bottom="1" border-right="1">CASE ID</td>
+<td border-bottom="1" border-right="1"><span letter-spacing="0" align="center">${customrecord.custrecord_gfl_job_card_case.casenumber}</span></td>
+</tr>
+<tr border-bottom="1">
+<td border-right="1">SALES HISTORY</td>
+<td border-right="1">${customrecord.custrecord_gfl_job_card_sales}</td>
+<td border-right="1">PHONE</td>
+<td>${customrecord.custrecord_gfl_job_card_phone}</td>
+</tr>
+<tr border-bottom="1">
+<td border-right="1">ITEM</td>
+<!-- <td border-right="1">${customrecord.custrecord_gfl_job_card_item.salesdescription}</td> -->
+<td border-right="1">
+${customrecord.custrecord_gfl_job_card_item}
+</td>
+<td border-right="1">WARRANTY</td>
+<td>${customrecord.custrecord_gfl_job_card_warranty}</td>
+</tr>
+<tr>
+<td rowspan="2" border-right="1" justification-ratio="0" letter-spacing="0">ADDITIONAL ITEMS</td>
+<td border-right="1" rowspan="2"> <!-- Multiple selection is treated as string in Freemarker -->
+<!-- ${customrecord.custrecord_gfl_job_card_addt_item?contains("\n")} yes -->
+<!-- ${customrecord.custrecord_gfl_job_card_addt_item.salesdescription} empty -->
+<!-- <#list customrecord.custrecord_gfl_job_card_addt_item.split("\n") as aitem>
+${aitem}
+</#list>
+empty
+-->
+<#assign additems = customrecord.custrecord_gfl_job_card_addt_item?word_list>
+<#list additems as word>${word}<br/></#list>
+</td>
+<td border-bottom="1" border-right="1">MONEY TO BE COLLECTED</td>
+<td border-bottom="1">${customrecord.custrecord_gfl_job_card_fee_applied}</td>
+</tr>
+<tr>
+<td border-right="1">REPORTED ISSUE FOR REPAIR</td>
+<td height="40">${customrecord.custrecord_gfl_job_card_scope}</td>
+</tr>
+</table>
+<P>By signing below, you are agreeing to the <b>GFL Service Terms and Conditions</b>, and consent for the GFL technician to commence Service. You also agree that any variances from a standard professional Service (outlined above) will be your financial responsibility.</P>
+
+<table class="signature" cellpadding-left="0" cellpadding-top="10" cellpadding-bottom="10" cellmargin="0" width="100%">
+<tr>
+<td border-top="1" border-left="0" width="50%">Name</td>
+<td width="10%"></td>
+<td width="40%"></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td border-top="1" border-left="0">Signature</td>
+<td></td>
+<td border-top="1" border-left="0">Date</td>
+</tr>
+</table>
+
+<P margin-top="20">By signing below, you have stated that the Service is now completed to your satisfaction.</P>
+
+<table class="signature" cellpadding-left="0" cellpadding-top="10" cellpadding-bottom="10" cellmargin="0" width="100%">
+<tr>
+<td border-top="1" border-left="0" width="50%">Name</td>
+<td width="10%"></td>
+<td width="40%"></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td border-top="1" border-left="0" width="50%">Signature</td>
+<td width="10%"></td>
+<td border-top="1" border-left="0" width="40%">Date</td>
+</tr>
+</table>
+
+<P margin-top="20">JOB COMPLETED BY (GFL Technician):</P>
+<P class="borderp"></P>
+
+<P margin-top="20">COMPLETED WORKS</P>
+<p class="borderp"></p>
+<p class="borderp"></p>
+<p class="borderp"></p>
+</div>
+</body>
+</pdf>

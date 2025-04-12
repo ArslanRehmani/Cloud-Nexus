@@ -1,0 +1,11 @@
+{
+  "paths": {
+    "jquery": "./lib/jquery_1.12.4_min",
+    "jquery-ui": "./lib/jQuery_ui_1.11.4.min"
+  },
+  "shim": {
+    "jquery-ui": [
+      "jquery"
+    ]
+  }
+}

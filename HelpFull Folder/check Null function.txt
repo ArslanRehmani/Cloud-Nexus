@@ -1,0 +1,6 @@
+function nullCheck(value) {
+            if (value != null && value != '' && value != undefined && value != 'NULL')
+                return true;
+            else
+                return false;
+        }

@@ -1,0 +1,861 @@
+<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+  <#assign DEBUG = false />
+  <#assign DEBUG_BORDER = false />
+  
+  <#assign showindustry = false />
+  <#assign maximgwidth = 36 /> 		<!-- maximum width of item images in mm -->
+  
+  <#assign f_light			= "https://5679695.app.netsuite.com/core/media/media.nl?id=5968&c=5679695&h=f7cc69c52c60af7816ef&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_lightitalic	= "https://5679695.app.netsuite.com/core/media/media.nl?id=5976&c=5679695&h=e4055667ac34e328ebfe&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_thin			= "https://5679695.app.netsuite.com/core/media/media.nl?id=5978&c=5679695&h=2231986171bfc06b62dc&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_thinitalic		= "https://5679695.app.netsuite.com/core/media/media.nl?id=5972&c=5679695&h=a2647bb48577b9ab5ca4&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_regular		= "https://5679695.app.netsuite.com/core/media/media.nl?id=5971&c=5679695&h=4c452b4278ea4ab8935b&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_italic			= "https://5679695.app.netsuite.com/core/media/media.nl?id=5975&c=5679695&h=11432483bfbb981f1f6d&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_book			= "https://5679695.app.netsuite.com/core/media/media.nl?id=5969&c=5679695&h=c4d10114678fd65a6d49&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_bookitalic		= "https://5679695.app.netsuite.com/core/media/media.nl?id=5979&c=5679695&h=34ae0aa07a226783292d&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_medium			= "https://5679695.app.netsuite.com/core/media/media.nl?id=5977&c=5679695&h=d3259fbf626f91a18b7b&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_mediumitalic	= "https://5679695.app.netsuite.com/core/media/media.nl?id=5973&c=5679695&h=a14425afae923f734cbc&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_bold			= "https://5679695.app.netsuite.com/core/media/media.nl?id=5970&c=5679695&h=bf5263aa52c896b93097&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_bolditalic		= "https://5679695.app.netsuite.com/core/media/media.nl?id=5974&c=5679695&h=cbf9153d310df69a50f8&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_boldflat		= "https://5679695.app.netsuite.com/core/media/media.nl?id=5974&c=5679695&h=cbf9153d310df69a50f8&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_boldflatitalic	= "https://5679695.app.netsuite.com/core/media/media.nl?id=5967&c=5679695&h=bea2f197fb0de2a53118&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_black			= "https://5679695.app.netsuite.com/core/media/media.nl?id=5966&c=5679695&h=84ee87538aa4204094a7&_xt=.ttf"?replace("&","&amp;") />
+  <#assign f_blackitalic	= "https://5679695.app.netsuite.com/core/media/media.nl?id=5965&c=5679695&h=19d66d8b52ce27d5afab&_xt=.ttf"?replace("&","&amp;") />
+  
+  <#assign mcm_logo			= "https://5679695.app.netsuite.com/core/media/media.nl?id=446641&c=5679695&h=7Uq7gkNsQRcfz7Y8X1TTGyxFpHp3unmA87LV6qV_V4_-DKhQ"?replace("&","&amp;") />
+  <#assign logoHeight		= 60 />
+  <#assign logoRatio		= 1280/155 />
+  <#assign no_image			= "" />
+  <#assign STRIKE_COLOR		= "#a6a6a6" />
+  
+  <#assign industry = record.custbody_industry />
+  <#assign linesExGST = false />
+  <#assign totalExGST = false />
+  <#assign maxlinespage1 = 4/>
+  <#assign rowheight = 40/>
+  
+  <#if industry = "Commercial">
+    <#assign linesExGST = true />
+    <#assign totalExGST = true />
+    <#assign rowheight = 15 />
+  <#elseif industry = "Retail">
+    <#assign linesExGST = false />
+    <#assign totalExGST = false />
+  <#elseif industry = "Wholesale">
+    <#assign linesExGST = false />
+    <#assign totalExGST = true />
+  <#elseif !industry?has_content>
+    <#assign industry = "Retail">
+    <#assign linesExGST = false />
+    <#assign totalExGST = false />
+  </#if>
+
+  <#assign toppad = "4mm" />
+
+    <#function description lineitem ind >
+      <#assign desc = "" />
+      
+      <#assign colour = lineitem.custcol_customcolour />
+      <#assign dims = lineitem.custcol_customdims />
+      <#if !colour?has_content><#assign colour = lineitem.custcol_product_colour_quote /></#if>
+      <#if !dims?has_content><#assign dims = lineitem.custcol_item_dims_sales_order /></#if>
+      
+      <!-- COMMERCIAL DESCRIPTION -->
+      <#if ind = "Commercial">
+        <#assign desc += '<p class="left supreme" style="font-size:8pt;margin-bottom:0;padding-bottom:0;">${lineitem.custcol_print_item_code}<br/></p>' />
+        <#assign desc += '<p class="left supremelight" style="font-size:7pt;margin:0;padding:0.25mm 0 0 0">' />
+        <#if lineitem.custcol_commdesc?has_content>
+          <#assign desc += "${lineitem.custcol_commdesc}"/>
+        <#elseif lineitem.description?has_content>
+          <#assign desc += "${lineitem.description}"/>
+        <#else>
+          <#assign desc += "${lineitem.custcol_itemrec_salesdesc}"/>
+        </#if>
+          
+        <#if !lineitem.custcol_commdesc?has_content>
+          <#assign desc += '<br/>' />
+          <#if colour?has_content><#assign desc += '${colour}'/></#if>
+          <#if dims?has_content>
+            <#if colour?has_content><#assign desc += ' - '/></#if>
+            <#assign desc += '${dims}'/>
+          </#if>
+        </#if>
+        <#assign desc += '</p>'/>
+        
+      <!-- WHOLESALE/RETAIL DESCRIPTION -->
+      <#elseif ind = "Retail" || ind = "Wholesale">
+        <#if lineitem.description?has_content>
+          <#assign desc += '<p class="left supreme" style="font-size:9pt;line-height:125%;padding-top:${toppad};">${lineitem.description}</p>' />
+        <#else>
+          <#assign desc += '<p class="left supreme" style="font-size:9pt;line-height:125%;padding-top:${toppad};">${lineitem.custcol_itemdisplayname}</p>' />
+        </#if>
+        
+        
+        <#assign desc += '<p class="left supremelight" style="font-size:7pt;line-height:125%;">'/>
+        
+        <#if ["Kit","InvtPart","Group"]?seq_contains(lineitem.itemType)>
+          <#assign desc += 'SKU: ${lineitem.custcol_print_item_code}<br/>'/>
+        </#if>
+          
+        <#if colour?has_content><#assign desc += '${colour}<br/>'/></#if>
+        <#if dims?has_content><#assign desc += '${dims}'/></#if>
+
+        <#assign desc += '</p>'/>
+        
+      <!-- DEFAULT DESCRIPTION -->
+      <#else>
+
+        <#if lineitem.description?has_content>
+        	<#assign desc += '${lineitem.description}'/>
+        <#else>
+          <#assign desc += "${lineitem.custcol_itemrec_salesdesc}"/>
+        </#if>
+        
+      </#if>
+        
+    <#return desc />
+  </#function>
+          
+  <#function toNum curr>
+    <#assign result = 0 />
+    <#if curr?length = 0>
+      <#assign curr = "0"/>
+    <#elseif !curr?has_content>
+      <#assign curr = "0"/>
+    </#if>
+    <#if curr?length gt 0>
+      <#assign result = curr?replace("$","")?replace(",","")?number />
+    </#if>
+    <#return result />
+  </#function>
+          
+  <#function roundTo4 value >
+    <#if !value?has_content><#assign value = 0 /></#if>
+    <#assign val = ( value * (10000) )?round / 10000 />
+    <#return val/>
+  </#function>
+
+  <#function roundTo2 value >
+    <#if !value?has_content><#assign value = 0 /></#if>
+    <#assign val = ( value * (100) )?round / 100 />
+    <#return val/>
+  </#function>
+
+    
+  <link name="SupremeLight" type="font" subtype="truetype" src="${f_light}" src-italic="${f_lightitalic}" embed="true" bytes="1" />
+  <link name="SupremeRegular" type="font" subtype="truetype" src="${f_regular}" src-bold="${f_bold}" src-italic="${f_italic}" src-bolditalic="${f_bolditalic}" embed="true" bytes="1" />
+  <link name="SupremeMedium" type="font" subtype="truetype" src="${f_medium}" src-bold="${f_bold}" src-italic="${f_mediumitalic}" src-bolditalic="${f_bolditalic}" embed="true" bytes="1" />
+  <link name="SupremeBold" type="font" subtype="truetype" src="${f_bold}" src-bold="${f_black}" src-italic="${f_blackitalic}" src-bolditalic="${f_blackitalic}" embed="true" bytes="1" />
+
+  <macrolist>
+    <macro id="mcm_header">
+      <table class="header" style="width: 100%;">
+        <tr>
+          <td colspan="10" class="left" style=""><p class="left supreme" style="font-size:15pt;padding-top:2.5mm;">${record.entity}</p></td>
+          <td colspan="7"  class="right" style="valign:top;padding: 2mm 0 0mm 0"  rowspan="3"><img src="${mcm_logo}" style="display: inline-block;height:6mm;width:${6*logoRatio}mm;"/></td>
+        </tr>
+        <tr>
+          <td colspan="10" class="left" style=""><p class="left supremelight" style="font-size:7pt;">T. <#if record.entity.mobilephone?has_content>${record.entity.mobilephone}<#else>${record.entity.phone}</#if></p></td>
+        </tr>
+        <tr>
+          <td colspan="10" class="left" style=""><p class="left supremelight" style="font-size:7pt;"><#if record.custbody_customer_email?length gt 1>${record.custbody_customer_email?html?keep_after("&gt;")?keep_before_last("&lt;")}</#if></p></td>
+        </tr>
+        <#if record.custbody_project_name?has_content>
+          <tr style="margin-top:1mm">
+            <td colspan="10" class="left" style=""><p class="left supremebold track100" style="font-size:6pt;">PROJECT</p></td>
+            <td colspan="7"/>
+          </tr>
+          <tr style="margin-top:0.5mm">
+            <td colspan="10" class="left" style=""><p class="left supremelight" style="font-size:7pt;">${record.custbody_project_name}</p></td>
+            <td colspan="7"/>
+          </tr>
+        </#if>
+        <tr style="margin-top:5mm;">
+          <!-- Secondary Block - tables -->
+          <td colspan="6" class="left">
+            <p class="left supremebold track100" style="font-size:6;">DELIVERY TO</p>
+            <p class="left supremelight" style="font-size:7;margin-top:0.5mm;line-height:125%">${record.shipaddress}</p>
+          </td>
+          <td colspan="6" class="left">
+            <p class="left supremebold track100" style="font-size:6;">INVOICE TO</p>
+            <p class="left supremelight" style="font-size:7;margin-top:0.5mm;line-height:125%">${record.billaddress}</p>
+          </td>
+          <td colspan="5" class="left" padding-left="3mm">
+            <p class="left supremebold track100" style="font-size:6;">CONSULTANT</p>
+            <p class="left supremelight" style="font-size:7;margin-top:0.5mm;line-height:125%;">${record.salesrep}
+              <br/>${record.salesrep.email?html?keep_after("&gt;")?keep_before_last("&lt;")}
+              <#if record.salesrep.mobilephone?has_content><br/>${record.salesrep.mobilephone}<#elseif record.salesrep.phone?has_content><br/>${record.salesrep.phone}<#else><br/>${record.custbody_location_phone}</#if>
+              <br/>${record.location}</p>
+          </td>
+        </tr>
+        <tr style="margin-top:5mm;">
+          <td colspan="10" class="left">
+            <p class="left supremebold track100" style="font-size:6;">QUOTE/DATE</p>
+            <p class="left supreme" style="font-size:15;margin:0;padding:2mm 0 0 0;"><#if showindustry>${industry}&nbsp; </#if>Quote #${record.tranid?upper_case?replace("QU","")}</p>
+            <p class="left supremelight" style="font-size:7;margin:0;padding:2mm 0 0 0;">${record.trandate?string("dd.MM.yyyy")}</p>
+          </td>
+        </tr>
+      </table>
+    </macro>
+
+    <macro id="mcm_footer">
+      <table style="width:100%;border-top:0.5px solid black;">
+        <tr style="">
+          <td class="left" style="padding:3mm 0 0 0;line-height:150%;"  colspan="9"><p class="left supremebold track100"  style="font-size:5pt">10 OXFORD ST, PADDINGTON, NSW 2021<br/>ABN 83 167 988 187</p></td>
+          <td class="left" style="padding:3mm 0 0 0;"  colspan="5" ><p class="right supremebold track100" style="font-size:5pt;">T. 1300 997 975 | MCMHOUSE.COM</p></td>
+          <td class="right" style="padding:3mm 0 0 0;"  colspan="3" ><p class="right supremebold track100" style="font-size:5pt;">PAGE <pagenumber/> OF <totalpages/></p></td>
+        </tr>
+      </table>
+    </macro>
+  </macrolist>
+  <style type="text/css">
+    * {
+      font-family: Supreme, sans-serif;
+      color: black;
+    }
+    table {
+      font-size: 9pt;
+      table-layout: fixed;
+      border-collapse: collapse;
+    }
+    <#if DEBUG_BORDER>
+    td {
+      border: 0.1 dotted grey;
+    }
+    </#if>
+    td p { align:left }
+    b {
+      font-weight: bold;
+      color: #333333;
+    }
+    div.line {
+      width:100%;
+      height: 0.1mm;
+      border-top: 0.05mm solid black;
+    }
+    .bord {border:0.1 solid red}
+
+    p.supremelight, td.supremelight {font-family: SupremeLight, sans-serif;}
+    p.supreme, td.supreme {font-family: SupremeRegular, sans-serif;}
+    p.supremebold, td.supremebold {font-family: SupremeBold, sans-serif;}
+    p.suprememedium, td.suprememedium {font-family: SupremeMedium, sans-serif;}
+    p.track20, td.track20 {letter-spacing:1.00}
+    p.track50, td.track50 {letter-spacing:0.50}
+    p.track80, td.track80 {letter-spacing:0.80}
+    p.track90, td.track90 {letter-spacing:0.90}
+    p.track100, td.track100 {letter-spacing:1.00}
+    p.track120, td.track120 {letter-spacing:1.20}
+    
+    td.tranid { padding: 4mm 0 0 0; align:left;letter-spacing:0.70;}
+    p.tranid {	font-size: 10.75pt;letter-spacing:0.70;}
+	
+    th.body {
+      font-weight: bold;
+      font-size: 9.5pt;
+      padding: 2mm 0 1mm 2mm;
+      align: left;
+      letter-spacing:0.90;
+    }
+    td.body {
+      font-size: 10pt;
+      padding: 2mm 0 1mm 2mm;
+      align: left;
+      valign: top;
+      letter-spacing:0.20;
+    }
+    p.body {
+      text-align:left;
+      font-size: 10pt;
+      letter-spacing:0.20;
+    }
+    td.picturecell {
+      padding: 2mm 4mm 2mm 0mm;
+      width: ${maximgwidth+8}mm;
+      valign: middle;
+    }
+    td.btop {border-top: 0.5px;}
+    td.bbot {border-bottom: 0.5px;}
+    p.btop {border-top: 0.5px;}
+    p.bbot {border-bottom: 0.5px;}
+
+    td.itemcontainer {
+      
+    }
+    th.item {
+      font-weight: bold;
+      font-size: 9.5pt;
+      padding: 2mm 0 1mm 2mm;
+      align: left;
+      letter-spacing:0.90;
+    }
+    td.item {
+      padding: 2mm 0 1mm 2mm;
+      align: left;
+      valign: top;
+    }
+    td.itemdesc {
+      padding: 2mm 0 1mm 2mm;
+      align: left;
+      valign: top;
+      letter-spacing:0.16;
+    }
+    p.item {
+      text-align:left;
+      font-size: 9pt;
+      letter-spacing:0.16;
+    }
+    p.itemdesc {
+      text-align:left;
+      font-size: 8.5pt;
+      letter-spacing:0.16;
+    }
+    td.center {
+      align:center;
+      text-align:center;
+    }
+    td.right {
+      text-align:right;
+      align:right;
+    }
+    p.center {
+      align:center;
+      text-align:center;
+    }
+    p.right {
+      text-align:right;
+      align:right;
+    }
+    p.summaryheading {
+      font-weight: bold;
+      font-size: 9.5pt;
+      padding: 5mm 0 2.5mm 0;
+      letter-spacing:0.63;
+    }
+    p.summarysubheading {
+      font-weight: normal;
+      font-size: 9.5pt;
+      letter-spacing:0.90;
+    }
+    p.termstext {
+      font-size: 8pt;
+      letter-spacing:0.16;
+    }
+    td.total_heading {
+      font-weight: bold;
+      font-size: 9.5pt;
+      padding: 5mm 0 2.5mm 0;
+      letter-spacing:0.99;
+    }
+    td.total_data {
+      font-weight: normal;
+      font-size: 9.5pt;
+      padding: 0 0 2.5mm 0;
+      letter-spacing:0.90;
+    }
+    td.total_grandtotal {
+      font-weight: bold;
+      font-size: 14pt;
+      padding: 0 0 2.5mm 0;
+      letter-spacing:1.20;
+    }
+  </style>
+    
+  </head>
+  
+<body header="mcm_header" header-height="75mm" footer="mcm_footer" footer-height="6mm" padding="16mm 15mm 10mm 15mm" size="A4">
+  
+  <!-- START ITEMS -->
+  
+  <#assign SHOW_BASE_DISCOUNT = record.custbody_showbasepricediscount />
+  
+  <!-- COUNT ITEM TYPES -->
+  <#assign KIT = 0/><#assign INVPART = 0/><#assign GROUP = 0/><#assign DISCOUNT = 0/><#assign SUBTOTAL = 0/>
+  <#if record.item?has_content>
+    <#list record.item as item>
+      <#if item.itemType = "Kit"><#assign KIT ++ /></#if>
+      <#if item.itemType = "InvtPart"><#assign INVPART ++ /></#if>
+      <#if item.itemType = "Group"><#assign GROUP ++ /></#if>
+      <#if item.itemType = "Discount"><#assign DISCOUNT ++ /></#if>
+      <#if item.itemType = "Subtotal"><#assign SUBTOTAL ++ /></#if>
+    </#list>
+  </#if>
+  
+  <#if DEBUG>
+    <div>
+      <p class="left supremelight" style="font-size:6pt;margin:0;padding:0.25mm 0 0 0">
+        <b>COUNTS:  INVPART ${INVPART} | KIT ${KIT} | GROUP ${GROUP} | DISCOUNT ${DISCOUNT} | SUBTOTAL ${SUBTOTAL}</b>
+      </p>
+    </div>
+  </#if>
+  
+  <#assign rrptotal = 0 />
+  <#assign rrptotalPlus = 0 />
+  <#assign rrptotalTest = 0 />
+  
+  <table class="itemtable" style="width: 100%; margin-top: 10px;">
+    <#assign disccols="6" /><#if !SHOW_BASE_DISCOUNT><#assign disccols="8" /></#if>
+    <thead> 
+      <#if industry = "Commercial">		<!-- Commercial = 6+6+4+4+3+(2)+2+4 -->
+        <tr style="padding-top:1mm;padding-bottom:7mm;margin:0">
+          <th class="left" colspan="8"><p class="left supremebold track100" style="font-size:6;letter-spacing:0.50;">PRODUCT</p></th>
+          <!--><th class="left" colspan="4"><p class="left supremebold track100" style="font-size:6;letter-spacing:0.50;padding-left:1mm;">SKU</p></th><-->
+          <!--><th class="center" colspan="4"><p class="center supremebold track100" style="font-size:6;letter-spacing:0.50;">SIZE</p></th><-->
+          <th class="center" colspan="3"><p class="center supremebold track100" style="font-size:6;letter-spacing:0.50;">PRICE<#if linesExGST><br/>(EXCL GST)</#if></p></th>
+          <#if SHOW_BASE_DISCOUNT><th class="left" colspan="2"><p class="center supremebold track100" style="font-size:6;letter-spacing:0.50;">DISC</p></th></#if>
+          <th class="center" colspan="3"><p class="center supremebold track100" style="font-size:6;letter-spacing:0.50;">QTY</p></th>
+          <th class="right" colspan="3"><p class="right supremebold track100" style="font-size:6;letter-spacing:0.50;">TOTAL<#if linesExGST><br/>(EXCL GST)</#if></p></th>
+        </tr>
+      <#else>   							<!-- retail/wholesale = 5+ 6(8) + 3 + 2(0) + 2 + 2 = 20 columns -->
+        <tr style="padding-top:3mm;padding-bottom:7mm;margin:0">
+          <th class="left" colspan="5"><p class="left supremebold track100" style="font-size:6;letter-spacing:0.50;">PRODUCT</p></th>
+          <th class="left" colspan="${disccols}"><p class="left supremebold track100" style="font-size:6;letter-spacing:0.50;">DESCRIPTION</p></th>
+          <th class="center" colspan="3"><p class="center supremebold track100" style="font-size:6;letter-spacing:0.50;"><#if industry = "Retail">RRP<#else>PRICE</#if><#if linesExGST><br/>(EXCL GST)</#if></p></th>
+          <#if SHOW_BASE_DISCOUNT><th class="left" colspan="2"><p class="center supremebold track100" style="font-size:6;letter-spacing:0.50;">DISC</p></th></#if>
+          <th class="center" colspan="2"><p class="center supremebold track100" style="font-size:6;letter-spacing:0.50;">QTY</p></th>
+          <th class="right" colspan="2"><p class="right supremebold track100" style="font-size:6;letter-spacing:0.50;">TOTAL<#if linesExGST><br/>(EXCL GST)</#if></p></th>
+        </tr>
+      </#if>
+    </thead>
+    
+  <#if record.item?has_content>
+    
+    <#assign GROUP_ACTIVE = false />
+    <#assign GROUP_ITEM = "" />
+    <#assign GROUP_QTY = 0 />
+    
+    <#assign GAMT_EXCLTAX = 0 /><#assign GAMT_INCLTAX = 0 /><#assign GAMT_RRPEXCL = 0 /><#assign GAMT_RRPINCL = 0 />
+    
+    <#list record.item as item>
+      <#assign showplaceholder = true />
+      <#assign lineamount = item.amount />
+      <#assign lineamountPlus = item.grossamt />
+
+      <#assign RATE_EXCLTAX = 0 /><#assign RATE_INCLTAX = 0 /><#assign RATE_RRPEXCL = 0 /><#assign RATE_RRPINCL = 0 />
+      <#if item.rate?length gt 1><#assign RATE_EXCLTAX = ( (item.rate * 10000)?round ) /10000 /></#if>
+      <#if item.custcol_rate_inc_gst?length gt 1><#assign RATE_INCLTAX = ( (item.custcol_rate_inc_gst * 10000)?round ) /10000 /></#if>
+      <#if item.custcol_rrpexcl?length gt 1><#assign RATE_RRPEXCL = ( (item.custcol_rrpexcl * 10000)?round ) /10000 /></#if>
+      <#if item.custcol_rrpincl?length gt 1><#assign RATE_RRPINCL = ( (item.custcol_rrpincl * 10000)?round ) /10000 /></#if>
+      <#assign BASE_DISCOUNT = 0/>
+      <#if RATE_RRPEXCL gt 0 && RATE_EXCLTAX gt 0 && RATE_RRPEXCL gt RATE_EXCLTAX >
+        <#assign BASE_DISCOUNT =  (1-(((RATE_EXCLTAX / RATE_RRPEXCL)*10000)?round / 10000))?abs />
+      </#if>
+
+      <#assign ratio = item.custcol_ext_img_ratio />
+      <#if ratio?length gt 0>
+        <#assign imagewidth = maximgwidth />
+        <#assign imageheight = imagewidth*ratio />
+      <#elseif item.custcol_itemrec_ratio1?length gt 0>
+        <#assign imagewidth = maximgwidth />
+        <#assign imageheight = imagewidth*item.custcol_itemrec_ratio1 />
+      <#else>
+        <#assign imagewidth = 0 />
+        <#assign imageheight = 0 />
+      </#if>
+              
+          
+          
+        <#if !GROUP_ACTIVE && DEBUG>
+          <tr>
+            <td colspan="20" class="left supremelight" style="font-size:6pt;margin:0;padding:0.25mm 0 0 0">
+              <b><u>LINE: ${item_index} | ITEM: ${item.item}</u></b> | TYPE: <b>${item.itemType}</b> | Industry: ${industry}<br/>RATE_RRPEXCL: ${RATE_RRPEXCL?string.currency} | RATE_RRPINCL: ${RATE_RRPINCL?string.currency} | RATE_EXCLTAX: ${RATE_EXCLTAX?string.currency} | RATE_INCLTAX: ${RATE_INCLTAX?string.currency} | BASE_DISCOUNT: ${BASE_DISCOUNT?string.percent}
+            </td>
+          </tr>
+        <#elseif GROUP_ACTIVE && DEBUG && item.itemType == "EndGroup">
+          <tr>
+            <td colspan="20" class="left supremelight" style="font-size:6pt;margin:0;padding:0.25mm 0 0 0">
+              <b><u>LINE: ${item_index} | ITEM: ${GROUP_ITEM.item}</u></b> | TYPE: <b>${GROUP_ITEM.itemType}</b> | Industry: ${industry}<br/>GAMT_RRPEXCL: ${GAMT_RRPEXCL?string.currency} | GAMT_RRPINCL: ${GAMT_RRPINCL?string.currency} | GAMT_EXCLTAX: ${GAMT_EXCLTAX?string.currency} | GAMT_INCLTAX: ${GAMT_INCLTAX?string.currency} | BASE_DISCOUNT: ${BASE_DISCOUNT?string.percent}
+            </td>
+          </tr>
+        </#if>
+
+        
+        
+        <#if !GROUP_ACTIVE && ["Kit","InvtPart","Service","OthCharge"]?seq_contains(item.itemType) && item.amount?length gt 0>
+
+            <#assign rrptotal += RATE_RRPEXCL * item.quantity />
+		    <#assign rrptotalPlus += RATE_RRPINCL * item.quantity />
+          <#assign rrptotalTest += RATE_RRPINCL * item.quantity />
+
+          
+          <!-- *************************** -->
+          <!-- TABLE LINES - COMMERCIAL   -->
+          <!-- *************************** -->
+          <#if industry = "Commercial">		<!-- Commercial = 6+6+4+4+3+(2)+2+4 -->
+            <tr style="padding:1mm 0mm 0mm 0mm;margin:0;height:${rowheight}mm;valign:top;">
+              <td class="left" colspan="8" style="valign:top;">${description(item,industry)}</td>
+              <td class="center" colspan="3" style="valign:top;"><p class="center supremelight" style="font-size:8pt;"><#if SHOW_BASE_DISCOUNT && RATE_EXCLTAX lt RATE_RRPEXCL ><span style="text-decoration:line-through;color:${STRIKE_COLOR}">$ ${RATE_RRPEXCL?string("#,##0.00")}</span><br/>$ ${RATE_EXCLTAX?string("#,##0.00")}<#else>$ ${RATE_EXCLTAX?string("#,##0.00")}</#if></p></td>
+              
+              <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2"><p class="center supremelight" style="font-size:8pt;"><#if BASE_DISCOUNT gt 0>${BASE_DISCOUNT?string.percent}</#if></p></td></#if>
+              <td class="center" colspan="3" style="valign:top;"><p class="center supremelight" style="font-size:8pt;">${item.quantity}</p></td>
+              <td class="right" colspan="3" style="valign:top;"><p class="right supreme" style="font-size:8pt;">$ ${item.amount?string("#,##0.00")}</p></td>
+            </tr>
+
+            <!-- *************************** -->
+            <!-- TABLE LINES - RETAIL        -->
+            <!-- *************************** -->
+            <#elseif industry = "Retail">
+              <tr style="padding:1mm 0mm 1mm 0mm;margin:0;height:${rowheight}mm;valign:top;">
+                <td class="picturecell" colspan="5" style="valign:top;">
+                  <#if item.custcol_ext_img_url?length != 0><img style="width:${imagewidth}mm;height:${imageheight}mm;" src="${item.custcol_ext_img_url}"/>
+                    <#elseif item.custcol_itemrec_thumb1?length != 0 && imageheight gt 0><img style="width:${imagewidth}mm;height:${imageheight}mm;" src="${item.custcol_itemrec_thumb1}"/>
+                      <#elseif no_image?length != 0 && showplaceholder><img style="border:1 solid black;width:${maximgwidth}mm;height:${maximgwidth}mm;" src="${no_image}"/>
+                        </#if>
+                      </td>
+                    <td class="left" colspan="${disccols}" style="valign:top;">${description(item,industry)}</td>
+
+                    <td class="center" colspan="3" style="valign:top;">
+                      <p class="center supreme" style="font-size:9pt;padding-top:${toppad};"><#if SHOW_BASE_DISCOUNT && RATE_EXCLTAX lt RATE_RRPEXCL><span style="text-decoration:line-through;color:${STRIKE_COLOR}">$ ${RATE_RRPINCL?string("#,##0.00")}</span><br/>$ ${RATE_INCLTAX?string("#,##0.00")}<#else>$ ${RATE_INCLTAX?string("#,##0.00")}</#if></p>
+                    </td>
+                    <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2"><p class="center supreme" style="font-size:9pt;padding-top:${toppad};"><#if BASE_DISCOUNT gt 0>${BASE_DISCOUNT?string.percent}</#if></p></td></#if>
+                    <td class="center" colspan="2" style="valign:top;"><p class="center supreme" style="font-size:9pt;padding-top:${toppad};">${item.quantity}</p></td>
+                    <td class="right" colspan="2" style="valign:top;"><p class="right supreme" style="font-size:9pt;padding-top:${toppad};">$ ${item.grossamt?string("#,##0.00")}</p></td>
+                    </tr>
+
+                  <!-- *************************** -->
+                  <!-- TABLE LINES - WHOLESALE     -->
+                  <!-- *************************** -->
+
+                  <#else> <!-->if industry = "Wholesale"<-->
+                    <tr style="padding:1mm 0mm 1mm 0mm;margin:0;height:${rowheight}mm;valign:top;">
+                      <td class="picturecell" colspan="5" style="valign:top;">
+                        <#if item.custcol_ext_img_url?length != 0><img style="width:${imagewidth}mm;height:${imageheight}mm;" src="${item.custcol_ext_img_url}"/>
+                          <#elseif item.custcol_itemrec_thumb1?length != 0 && imageheight gt 0><img style="width:${imagewidth}mm;height:${imageheight}mm;" src="${item.custcol_itemrec_thumb1}"/>
+                          <#elseif no_image?length != 0 && showplaceholder><img style="border:1 solid black;width:${maximgwidth}mm;height:${maximgwidth}mm;" src="${no_image}"/>
+                          </#if>
+                      </td>
+                      <td class="left" colspan="${disccols}" style="valign:top;">${description(item,industry)}</td>
+
+                      <td class="center" colspan="3" style="valign:top;">
+                        <p class="center supreme" style="font-size:9pt;padding-top:${toppad};"><#if SHOW_BASE_DISCOUNT && RATE_EXCLTAX lt RATE_RRPEXCL><span style="text-decoration:line-through;color:${STRIKE_COLOR}">$ ${RATE_RRPEXCL?string("#,##0.00")}</span><br/>$ ${RATE_EXCLTAX?string("#,##0.00")}<#else>$ ${RATE_EXCLTAX?string("#,##0.00")}</#if></p>
+                      </td>
+                      <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2"><p class="center supreme" style="font-size:9pt;padding-top:${toppad};"><#if BASE_DISCOUNT gt 0>${BASE_DISCOUNT?string.percent}</#if></p></td></#if>
+                      <td class="center" colspan="2" style="valign:top;"><p class="center supreme" style="font-size:9pt;padding-top:${toppad};">${item.quantity}</p></td>
+                      <td class="right" colspan="2" style="valign:top;"><p class="right supreme" style="font-size:9pt;padding-top:${toppad};">$ ${item.amount?string("#,##0.00")}</p></td>
+                    </tr>
+                    </#if>
+          
+          
+        <#elseif item.itemType = "Group">
+          
+          <#assign GROUP_ACTIVE = true />
+          <#assign GROUP_ITEM = item />
+
+        <#elseif GROUP_ACTIVE && ["Kit","InvtPart","Service","OthCharge"]?seq_contains(item.itemType) && item.amount?length gt 0>
+          
+          <#assign GAMT_EXCLTAX += toNum(item.amount) />
+          <#assign GAMT_INCLTAX += toNum(item.grossamt) />
+          <#assign GAMT_RRPEXCL += toNum(item.custcol_rrpexcl_total) />
+          <#assign GAMT_RRPINCL += toNum(item.custcol_rrpincl_total) />
+          
+        <#elseif item.itemType = "EndGroup" && item.amount?length gt 0>
+          
+          <#assign GROUP_RATE_EXCL = 0 />
+          <#assign GROUP_RATE_INCL = 0 />
+          <#assign GROUP_RRP_EXCL = 0 />
+          <#assign GROUP_RRP_INCL = 0 />
+          <#if GROUP_ITEM.quantity gt 0>
+            <#assign GROUP_RATE_EXCL = ((GAMT_EXCLTAX / GROUP_ITEM.quantity) * 100 ) ? floor / 100 />
+            <#assign GROUP_RATE_INCL = ((GAMT_INCLTAX / GROUP_ITEM.quantity) * 100 ) ? floor / 100 />
+            <#assign GROUP_RRP_EXCL = ((GAMT_RRPEXCL / GROUP_ITEM.quantity) * 100 ) ? floor / 100 />
+            <#assign GROUP_RRP_INCL = ((GAMT_RRPINCL / GROUP_ITEM.quantity) * 100 ) ? floor / 100 />
+          </#if>
+          
+          <#assign rrptotal += GAMT_EXCLTAX />
+          <#assign rrptotalPlus += GAMT_INCLTAX />
+  		  <#assign rrptotalTest += GAMT_RRPINCL />
+          
+          <#if GROUP_RRP_EXCL gt 0 && GROUP_RATE_EXCL gt 0 && GROUP_RRP_EXCL gt GROUP_RATE_EXCL >
+            <#assign BASE_DISCOUNT =  (1-(((GROUP_RATE_EXCL / GROUP_RRP_EXCL)*10000)?round / 10000))?abs />
+          </#if>
+		
+          <#assign ratio = GROUP_ITEM.custcol_ext_img_ratio />
+          <#if ratio?length gt 0>
+            <#assign imagewidth = maximgwidth />
+            <#assign imageheight = imagewidth*ratio />
+            <#elseif GROUP_ITEM.custcol_itemrec_ratio1?length gt 0>
+              <#assign imagewidth = maximgwidth />
+              <#assign imageheight = imagewidth*GROUP_ITEM.custcol_itemrec_ratio1 />
+              <#else>
+                <#assign imagewidth = 0 />
+                <#assign imageheight = 0 />
+                </#if>
+
+              <!-- *************************** -->
+              <!-- GROUP TABLE LINES - COMMERCIAL   -->
+              <!-- *************************** -->
+              <#if industry = "Commercial">
+                <tr style="padding:1mm 0mm 0mm 0mm;margin:0;height:${rowheight}mm;valign:top;">
+                  <td class="left" colspan="8" style="valign:top;">${description(GROUP_ITEM,industry)}</td>
+                  <td class="center" colspan="3" style="valign:top;"><p class="center supremelight" style="font-size:8pt;">
+                    <#if SHOW_BASE_DISCOUNT && GROUP_RATE_EXCL lt GROUP_RRP_EXCL ><span style="text-decoration:line-through;color:${STRIKE_COLOR}">$ ${GROUP_RRP_EXCL?string("#,##0.00")}</span><br/>$ ${GROUP_RATE_EXCL?string("#,##0.00")}<#else>$ ${GROUP_RATE_EXCL?string("#,##0.00")}</#if>
+                    </p></td>
+                  <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2"><p class="center supremelight" style="font-size:8pt;"><#if BASE_DISCOUNT gt 0>${BASE_DISCOUNT?string.percent}</#if></p></td></#if>
+                  <td class="center" colspan="3" style="valign:top;"><p class="center supremelight" style="font-size:8pt;">${GROUP_ITEM.quantity}</p></td>
+                  <td class="right" colspan="3" style="valign:top;"><p class="right supreme" style="font-size:8pt;">$ ${GAMT_EXCLTAX?string("#,##0.00")}</p></td>
+                </tr>
+
+
+                <!-- *************************** -->
+                <!-- GROUP TABLE LINES - RETAIL        -->
+                <!-- *************************** -->
+                
+                
+                <#elseif industry = "Retail">
+                  <tr style="padding:1mm 0mm 1mm 0mm;margin:0;height:${rowheight}mm;valign:top;">
+                    <td class="picturecell" colspan="5" style="valign:top;">
+                      <#if GROUP_ITEM.custcol_ext_img_url?length != 0><img style="width:${imagewidth}mm;height:${imageheight}mm;" src="${GROUP_ITEM.custcol_ext_img_url}"/>
+                        <#elseif GROUP_ITEM.custcol_itemrec_thumb1?length != 0 && imageheight gt 0><img style="width:${imagewidth}mm;height:${imageheight}mm;" src="${GROUP_ITEM.custcol_itemrec_thumb1}"/>
+                          <#elseif no_image?length != 0 && showplaceholder><img style="border:1 solid black;width:${maximgwidth}mm;height:${maximgwidth}mm;" src="${no_image}"/>
+                            </#if>
+                          </td>
+                        <td class="left" colspan="${disccols}" style="valign:top;">${description(GROUP_ITEM,industry)}</td>
+
+                        <td class="center" colspan="3" style="valign:top;">
+                          <p class="center supreme" style="font-size:9pt;padding-top:${toppad};"><#if SHOW_BASE_DISCOUNT && GROUP_RATE_EXCL lt GROUP_RRP_EXCL><span style="text-decoration:line-through;color:${STRIKE_COLOR}">$ ${GROUP_RRP_INCL?string("#,##0.00")}</span><br/>$ ${GROUP_RATE_INCL?string("#,##0.00")}<#else>$ ${GROUP_RATE_INCL?string("#,##0.00")}</#if></p>
+                        </td>
+                        <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2"><p class="center supreme" style="font-size:9pt;padding-top:${toppad};"><#if BASE_DISCOUNT gt 0>${BASE_DISCOUNT?string.percent}</#if></p></td></#if>
+                        <td class="center" colspan="2" style="valign:top;"><p class="center supreme" style="font-size:9pt;padding-top:${toppad};">${GROUP_ITEM.quantity}</p></td>
+                        <td class="right" colspan="2" style="valign:top;"><p class="right supreme" style="font-size:9pt;padding-top:${toppad};">$ ${GAMT_INCLTAX?string("#,##0.00")}</p></td>
+                        </tr>
+                
+                
+                  <!-- *************************** -->
+                  <!-- TABLE LINES - WHOLESALE     -->
+                  <!-- *************************** -->
+
+                      <#else>
+                        <tr style="padding:1mm 0mm 1mm 0mm;margin:0;height:${rowheight}mm;valign:top;">
+                          <td class="picturecell" colspan="5" style="valign:top;">
+                            <#if GROUP_ITEM.custcol_ext_img_url?length != 0><img style="width:${imagewidth}mm;height:${imageheight}mm;" src="${GROUP_ITEM.custcol_ext_img_url}"/>
+                              <#elseif GROUP_ITEM.custcol_itemrec_thumb1?length != 0 && imageheight gt 0><img style="width:${imagewidth}mm;height:${imageheight}mm;" src="${GROUP_ITEM.custcol_itemrec_thumb1}"/>
+                                <#elseif no_image?length != 0 && showplaceholder><img style="border:1 solid black;width:${maximgwidth}mm;height:${maximgwidth}mm;" src="${no_image}"/>
+                                  </#if>
+                                </td>
+                              <td class="left" colspan="${disccols}" style="valign:top;">${description(GROUP_ITEM,industry)}</td>
+
+                              <td class="center" colspan="3" style="valign:top;">
+                                <p class="center supreme" style="font-size:9pt;padding-top:${toppad};"><#if SHOW_BASE_DISCOUNT && GROUP_RATE_EXCL lt GROUP_RRP_EXCL><span style="text-decoration:line-through;color:${STRIKE_COLOR}">$ ${GROUP_RRP_EXCL?string("#,##0.00")}</span><br/>$ ${GROUP_RATE_EXCL?string("#,##0.00")}<#else>$ ${GROUP_RATE_EXCL?string("#,##0.00")}</#if></p>
+                              </td>
+                              <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2"><p class="center supreme" style="font-size:9pt;padding-top:${toppad};"><#if BASE_DISCOUNT gt 0>${BASE_DISCOUNT?string.percent}</#if></p></td></#if>
+                              <td class="center" colspan="2" style="valign:top;"><p class="center supreme" style="font-size:9pt;padding-top:${toppad};">${GROUP_ITEM.quantity}</p></td>
+                              <td class="right" colspan="2" style="valign:top;"><p class="right supreme" style="font-size:9pt;padding-top:${toppad};">$ ${GAMT_EXCLTAX?string("#,##0.00")}</p></td>
+                              </tr>
+                        </#if>
+
+          
+          <#assign GROUP_ACTIVE = false />
+          <#assign GROUP_ITEM = "" />
+          <#assign GAMT_EXCLTAX = 0 /><#assign GAMT_INCLTAX = 0 /><#assign GAMT_RRPEXCL = 0 /><#assign GAMT_RRPINCL = 0 />
+
+                        
+        <#elseif !GROUP_ACTIVE && item.itemType = "Discount" && item.amount?length gt 0>
+          <#assign isPercent = false />
+          <#assign isNegative = false />
+          <#if item.rate?contains("%")><#assign isPercent = true /></#if>
+          <#if item.amount lt 0><#assign isNegative = true /></#if>
+          
+          <#if industry = "Commercial">
+            <tr style="padding:1mm 0mm 0mm 0mm;margin:0;height:${rowheight}mm;valign:top;">
+              <td class="left" colspan="8" style="valign:top;padding-left:10mm;align:right"><p class="left supreme" style="font-size:8pt;margin-bottom:0;padding-bottom:0;">
+                <#if item.description?has_content>${item.description}<#elseif item.custcol_itemdisplayname?has_content>${item.custcol_itemdisplayname}<#else>${item.custcol_print_item_code}</#if>
+              	</p></td>
+              <td class="center" colspan="3" style="valign:top;"><p class="center supremelight" style="font-size:8pt;"><#if isPercent>${item.rate}<#else>$ ${item.rate?string("#,##0.00")}</#if></p></td>
+              <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2" style="valign:top"><p class="center supremelight" style="font-size:8pt;"></p></td></#if>
+              <td class="center" colspan="3" style="valign:top;"><p class="center supremelight" style="font-size:8pt;"></p></td>
+              <td class="right" colspan="3" style="valign:top;"><p class="right supreme" style="font-size:8pt;"><#if isNegative>- </#if>$ ${item.amount?abs?string("#,##0.00")}</p></td>
+            </tr>
+            
+          <#elseif industry = "Retail">
+            <tr style="padding:1mm 0mm 1mm 0mm;margin:0;height:${rowheight/2}mm;valign:top;">
+              <td class="picturecell" colspan="5" style="valign:top;"></td>
+              <td class="left" colspan="${disccols}" style="valign:top;"><p class="left supreme" style="font-size:8pt;margin-bottom:0;padding-bottom:0;">
+                <#if item.description?has_content>${item.description}<#elseif item.custcol_itemdisplayname?has_content>${item.custcol_itemdisplayname}<#else>${item.custcol_print_item_code}</#if>
+              	</p></td>
+
+              <td class="center" colspan="3" style="valign:top;">
+                <p class="center supreme" style="font-size:9pt;padding-top:0;"><#if isPercent>${item.rate}<#else>$ ${item.rate?string("#,##0.00")}</#if></p>
+                </td>
+                <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2"><p class="center supreme" style="font-size:9pt;padding-top:0;"></p></td></#if>
+                <td class="center" colspan="2" style="valign:top;"><p class="center supreme" style="font-size:9pt;padding-top:0;"></p></td>
+                <td class="right" colspan="2" style="valign:top;"><p class="right supreme" style="font-size:9pt;padding-top:0;"><#if isNegative>- </#if>$ ${item.grossamt?abs?string("#,##0.00")}</p></td>
+            </tr>
+            
+          <#else> <!-- WHOLESALE -->
+            <tr style="padding:1mm 0mm 1mm 0mm;margin:0;height:${rowheight/2}mm;valign:top;">
+              <td class="picturecell" colspan="5" style="valign:top;"></td>
+              <td class="left" colspan="${disccols}" style="valign:top;"><p class="left supreme" style="font-size:8pt;margin-bottom:0;padding-bottom:0;">
+                <#if item.description?has_content>${item.description}<#elseif item.custcol_itemdisplayname?has_content>${item.custcol_itemdisplayname}<#else>${item.custcol_print_item_code}</#if>
+              	</p></td>
+
+              <td class="center" colspan="3" style="valign:top;">
+                    <p class="center supreme" style="font-size:9pt;padding-top:0;"><#if isPercent>${item.rate}<#else>$ ${item.rate?string("#,##0.00")}</#if></p>
+                  </td>
+                  <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2"><p class="center supreme" style="font-size:9pt;padding-top:0;"></p></td></#if>
+                  <td class="center" colspan="2" style="valign:top;"><p class="center supreme" style="font-size:9pt;padding-top:0;"></p></td>
+                  <td class="right" colspan="2" style="valign:top;"><p class="right supreme" style="font-size:9pt;padding-top:0;"><#if isNegative>- </#if>$ ${item.amount?abs?string("#,##0.00")}</p></td>
+                  </tr>
+          </#if>
+          
+              
+        <!-- SUBTOTAL -->
+        <#elseif !GROUP_ACTIVE && item.itemType = "Subtotal" && item.amount?length gt 0>
+          <#assign isPercent = false />
+          <#assign isNegative = false />
+          <#if item.rate?contains("%")><#assign isPercent = true /></#if>
+          <#if item.amount lt 0><#assign isNegative = true /></#if>
+          
+          <#if industry = "Commercial">
+            <tr style="padding:1mm 0mm 0mm 0mm;margin:0;height:${rowheight}mm;valign:top;">
+              <td class="left" colspan="8" style="valign:middle;padding-left:10mm;align:right"><p class="left supreme" style="font-size:8pt;margin-bottom:0;padding-bottom:0;">
+                <#if item.description?has_content>${item.description}<#elseif item.custcol_itemdisplayname?has_content>${item.custcol_itemdisplayname}<#else>${item.custcol_print_item_code}</#if>
+              	</p></td>
+              <td class="center" colspan="3" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"><p class="center supremelight" style="font-size:8pt;"></p></td>
+              <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"><p class="center supremelight" style="font-size:8pt;"></p></td></#if>
+              <td class="center" colspan="3" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"><p class="center supremelight" style="font-size:8pt;"></p></td>
+              <td class="right" colspan="3" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"><p class="right supreme" style="font-size:8pt;"><#if isNegative>(</#if>$ ${item.amount?abs?string("#,##0.00")}<#if isNegative>)</#if></p></td>
+            </tr>
+            
+           <#elseif industry = "Retail">
+            <tr style="padding:1mm 0mm 1mm 0mm;margin:0;height:${rowheight/2}mm;valign:top;">
+              <td class="picturecell" colspan="5" style="valign:middle;"></td>
+              <td class="left" colspan="${disccols}" style="valign:middle;"><p class="left supreme" style="font-size:8pt;margin-bottom:0;padding-bottom:0;">
+                <#if item.description?has_content>${item.description}<#elseif item.custcol_itemdisplayname?has_content>${item.custcol_itemdisplayname}<#else>${item.custcol_print_item_code}</#if>
+              	</p></td>
+
+              <td class="center" colspan="3" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"></td>
+                <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2" style="valign:top;border-top:0.5 solid ${STRIKE_COLOR}"><p class="center supreme" style="font-size:9pt;padding-top:0;"></p></td></#if>
+                <td class="center" colspan="2" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"><p class="center supreme" style="font-size:9pt;padding-top:0;"></p></td>
+                <td class="right" colspan="2" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"><p class="right supreme" style="font-size:9pt;padding-top:0;"><#if isNegative>- </#if>$ ${item.grossamt?abs?string("#,##0.00")}</p></td>
+            </tr>
+            
+          <#else> <!-- WHOLESALE -->
+            <tr style="padding:1mm 0mm 1mm 0mm;margin:0;height:${rowheight/2}mm;valign:top;">
+              <td class="picturecell" colspan="5" style="valign:middle;"></td>
+              <td class="left" colspan="${disccols}" style="valign:middle;"><p class="left supreme" style="font-size:8pt;margin-bottom:0;padding-bottom:0;">
+                <#if item.description?has_content>${item.description}<#elseif item.custcol_itemdisplayname?has_content>${item.custcol_itemdisplayname}<#else>${item.custcol_print_item_code}</#if>
+              	</p></td>
+
+              <td class="center" colspan="3" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"></td>
+                <#if SHOW_BASE_DISCOUNT><td class="center" colspan="2" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"><p class="center supreme" style="font-size:9pt;padding-top:0;"></p></td></#if>
+                <td class="center" colspan="2" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"><p class="center supreme" style="font-size:9pt;padding-top:0;"></p></td>
+                <td class="right" colspan="2" style="valign:middle;border-top:0.5 solid ${STRIKE_COLOR}"><p class="right supreme" style="font-size:9pt;padding-top:0;"><#if isNegative>- </#if>$ ${item.amount?abs?string("#,##0.00")}</p></td>
+            </tr>
+             
+          </#if>
+            
+        </#if>
+    </#list>
+  </#if>
+    <!-- end items -->
+</table>
+    
+  <#assign shippingtotal = record.shippingcost />
+  <#assign shippingtotalPlus = record.custbody_shipping_cost_inc_gst />
+      
+  <#assign rrptotal -= shippingtotal />
+  <#assign rrptotalPlus -= shippingtotalPlus />
+            
+<div style="padding:0;margin:0">
+  <table style="width:100%;margin-top:2mm">
+    <tr>
+      <td colspan="16">
+        <table style="width:100%;margin-top:0mm">
+          <tr>
+            <td class="left btop" style="margin:0 4mm 0 0;padding: 2mm 0 0 0"><p class="left supremelight" style="font-size:7pt;">${record.custbody_memo_invoice}</p></td>
+          </tr>
+        </table>
+      </td>
+      <td colspan="8">
+        <table style="width:100%;margin-top:0mm">
+          <#if industry = "Retail" && rrptotal gt record.subtotal && record.currency == "AUD">
+            <tr>
+              <td colspan="3" class="left btop bbot" style="valign:middle;"><p class="left supremebold track100" style="font-size:5pt;">RRP TOTAL</p></td>
+              <td colspan="5" class="right btop bbot" style="valign:middle;padding:2.5mm 0 2.5mm 0;"><p class="right supreme" style="font-size:9pt;"><strike>$ <#if totalExGST>${rrptotal?string("#,##0.00")}<#else>${rrptotalPlus?string("#,##0.00")}</#if></strike></p></td>
+            </tr>
+          <#elseif record.currency != "AUD">
+            <tr>
+              <td colspan="3" class="left btop bbot" style="valign:middle;"><p class="left supremebold track100" style="font-size:5pt;">CURRENCY</p></td>
+              <td colspan="5" class="right btop bbot" style="valign:middle;padding:2.5mm 0 2.5mm 0;"><p class="right supreme" style="font-size:9pt;">${record.currency}</p></td>
+            </tr>
+          </#if>
+          <tr>
+            <#assign brd = " btop"/><#if industry="Retail" && rrptotal gt record.subtotal><#assign brd = ""/></#if>
+            <td colspan="3" class="left bbot ${brd}" style="valign:middle;"><p class="left supremebold track100" style="font-size:5pt;">SUBTOTAL<#if totalExGST></#if></p></td>
+            <td colspan="5" class="right bbot ${brd}" style="valign:middle;padding:2.5mm 0 2.5mm 0;"><p class="right supreme" style="font-size:9pt;">$ <#if totalExGST>${record.subtotal?string("#,##0.00")}<#else>${(record.subtotal*1.1)?string("#,##0.00")}</#if></p></td>
+          </tr>
+          
+          <#if record.discounttotal lt 0>
+            <tr>
+            <td colspan="3" class="left bbot ${brd}" style="valign:middle;"><p class="left supremebold track100" style="font-size:5pt;">DISCOUNT</p></td>
+            <td colspan="5" class="right bbot ${brd}" style="valign:middle;padding:2.5mm 0 2.5mm 0;"><p class="right supreme" style="font-size:9pt;">- $ <#if totalExGST>${record.discounttotal?abs?string("#,##0.00")}<#else>${(record.discounttotal*1.1)?abs?string("#,##0.00")}</#if></p></td>
+            </tr>
+          </#if>
+          
+          <tr>
+            <td colspan="5" class="left bbot" style="valign:middle;"><p class="left supremebold track100" style="font-size:5pt;">SHIPPING<#if record.shipmethod?has_content><br/>(${record.shipmethod?upper_case})</#if></p></td>
+            <td colspan="3" class="right bbot" style="valign:middle;padding:2.5mm 0 2.5mm 0;"><p class="right supreme" style="font-size:9pt;">$ <#if totalExGST>${shippingtotal?string("#,##0.00")}<#else>${shippingtotalPlus?string("#,##0.00")}</#if></p></td>
+          </tr>
+          <tr>
+            <td colspan="3" class="left bbot" style="valign:middle;"><p class="left supremebold track100" style="font-size:5pt;">GST<#if !totalExGST> INCLUDED</#if></p></td>
+            <td colspan="5" class="right bbot" style="valign:middle;padding:2.5mm 0 2.5mm 0;"><p class="right supreme" style="font-size:9pt;">${record.taxtotal?string("#,##0.00")}</p></td>
+          </tr>
+          <tr>
+            <td colspan="3" class="left bbot" style="valign:bottom;padding:2.5mm 0 2.5mm 0;"><p class="left supremebold track100" style="font-size:5pt;">TOTAL INCL GST</p></td>
+            <td colspan="5" class="right bbot" style="valign:bottom;padding:2.5mm 0 2.5mm 0;"><p class="right supreme" style="font-size:15pt;">$ ${record.total?string("#,##0.00")}</p></td>
+          </tr>
+          <tr>
+            <td colspan="3" class="left bbot" style="valign:middle;"><p class="left supremebold track100" style="font-size:5pt;">TERMS</p></td>
+            <td colspan="5" class="right bbot" style="valign:middle;padding:2.5mm 0 2.5mm 0;"><p class="right supremelight" style="font-size:5pt;">${record.terms}</p></td>
+          </tr>
+          <#if record.terms?starts_with("50% Dep")>
+            <tr>
+              <td colspan="3" class="left bbot" style="valign:bottom;padding:2.5mm 0 2.5mm 0;"><p class="left supremebold track100" style="font-size:5pt;">DEPOSIT REQUIRED</p></td>
+              <td colspan="5" class="right bbot" style="valign:bottom;padding:2.5mm 0 2.5mm 0;"><p class="right supreme" style="font-size:15pt;">$ ${(record.total/2)?string("#,##0.00")}</p></td>
+            </tr>
+            </#if>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+    
+<div id="terms">
+  <table style="width:100%;margin-top:4mm">
+    <tr>
+      <td colspan="16" class="left btop suprememedium" style="margin:0 4mm 0 0;padding: 2mm 0 0 0"><p class="left supremebold track100" style="font-size:5pt;">TERMS &amp; CONDITIONS</p></td>
+      <td colspan="8" class="left btop suprememedium" style="margin:0 0 0 0;padding: 2mm 0 0 0"><p class="left supremebold track100" style="font-size:5pt;">PAYMENT DETAILS</p></td>
+    </tr>
+    <tr>
+	<td colspan="8" class="left" style="margin:0;padding:2mm 3mm 0 0">
+        <p class="left supremelight" style="font-size:5pt;margin:0;padding:0;">Terms and Conditions <a href="https://www.mcmhouse.com/pages/terms-and-conditons" target="_blank">Click Here</a> for more information.
+</p>
+        <p class="left supremelight" style="font-size:5pt;padding:0;margin:2mm 0 1mm 0;">Returns / Warranty
+          <a href="https://www.mcmhouse.com/pages/product-care-maintainance" target="_blank">Click here</a> for more information
+        </p>
+      </td>
+      <td colspan="8" class="left" style="margin:0;padding:2mm 3mm 0 0">&nbsp;
+      </td>
+      <td colspan="8" class="left" style="margin:0;padding:0 0 0 0">
+        <table style="width:100%;margin:0;padding:0">
+
+          <tr><td colspan="10" class="left" style="margin-top:2mm"><p class="left supremebold track100" style="font-size:7pt;line-height:120%;">CREDIT CARD</p></td></tr>
+          <tr><td colspan="10" class="left" style="font-size:7pt;"><p class="left supremelight">MCM House accepts all major credit cards. Please contact your consultant to make payment via our online payment portal or over the phone.</p></td></tr>
+
+          <tr><td colspan="10" class="left" style="margin-top:2mm"><p class="left supremebold track100" style="font-size:7pt;line-height:120%;">EFT</p></td></tr>
+          <tr><td colspan="3" class="left" style="font-size:7pt;"><p class="left supremelight">Name:</p></td><td colspan="7" class="left" style="font-size:7pt;"><p class="left supremelight">Charles Bruce Pty Ltd T/A MCM House</p></td></tr>
+          <tr><td colspan="3" class="left" style="font-size:7pt;"><p class="left supremelight">BSB:</p></td><td colspan="7" class="left" style="font-size:7pt;"><p class="left supremelight">012 140</p></td></tr>
+          <tr><td colspan="3" class="left" style="font-size:7pt;"><p class="left supremelight">Account:</p></td><td colspan="7" class="left" style="font-size:7pt;"><p class="left supremelight">302 8126 02</p></td></tr>
+          <tr><td colspan="3" class="left" style="font-size:7pt;"><p class="left supremelight">Reference:</p></td><td colspan="7" class="left" style="font-size:7pt;"><p class="left supremelight">#${record.tranid?upper_case?replace("QU","")}</p></td></tr>
+          <tr><td colspan="10" class="left" style="font-size:7pt;"><p class="left supremelight">Please email your remittance advice to accounts@mcmhouse.com</p></td></tr>
+        </table>
+      </td>
+    </tr>
+    
+  </table>
+  
+</div>
+  
+</body>
+</pdf>

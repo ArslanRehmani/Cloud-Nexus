@@ -1,0 +1,31 @@
+.replace(/([aA-zZ]),([aA-zZ])/gm, "@")
+
+
+
+  var currentline = lines[i].replace(/"/g, '').replace('\r','').split(",");
+
+
+
+let str = "ERIC,HOLLINGSWORTH,1080,Tradeshows/Conferences - Certified Sales (R),Travel Tradeshow,6411,14.69,Paid,'Breakfast,1/16',1/16/2023,3/1/2023 11:29";
+let word = "Breakfast";
+let regex = new RegExp(`\\b${word},\\b`, "g"); // matches "Breakfast," with word boundary
+let newStr = str.replace(regex, word);
+console.log(newStr); // Output: "ERIC,HOLLINGSWORTH,1080,Tradeshows/Conferences - Certified Sales (R),Travel Tradeshow,6411,14.69,Paid,'Breakfast1/16',1/16/2023,3/1/2023 11:29"
+
+
+var csvLine = 'John,Doe,"123 Main St, Apt 4B",New York,NY,10001';
+var modifiedLine = csvLine.replace(/(?<=\")(.*?),(.*?)(?=\")/g, (_, match) => match.replace(/,/g, '-'));
+console.log(modifiedLine);
+VM91:3 John,Doe,"123 Main St",New York,NY,10001
+
+
+
+
+let csvLine = 'John,Doe,"123 Main St, Apt 4B",New York,NY,10001';
+let newCsvLine = csvLine.replace(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/g, '|');
+console.log(newCsvLine.split('|'));
+
+****below works for me******
+var currentline = lines[i].replace(/"([^"]*)"/g, function (match, group1) {
+                    return group1.replace(/,/g, ';');
+                }).replace(/"/g, '').replace('\r', '').split(",");

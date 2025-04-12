@@ -1,0 +1,139 @@
+var mapobj = {"94335":{"itemLocation":"2","item":"94335","lineSequance":0}};
+undefined
+ var values = Object.keys(mapobj).map(function(e) {
+                return mapobj[e];
+              });
+undefined
+values
+[{…}]
+var itemLocArray = values.map(function(obj){
+                return obj.itemLocation;
+             });
+undefined
+itemLocArray
+['2']
+itemLocArray = [...new Set(itemLocArray)];
+['2']
+
+
+
+
+/*
+ ***********************************************************************
+ *
+ * The following javascript code is created by ALPHABOLD Consultants LLC,
+ * a NetSuite Partner. It is a SuiteFlex component containing custom code
+ * intended for NetSuite (www.netsuite.com) and use the SuiteScript API.
+ * The code is provided "as is": ALPHABOLD Inc. shall not be liable
+ * for any damages arising out the intended use or if the code is modified
+ * after delivery.
+ *
+ * Company:		ALPHABOLD Consultants LLC, www.AlphaBOLDconsultants.com
+ * Author:		hriaz@AlphaBOLD.com
+ * File:		ab_ue_line_rate_v1.js
+ * Date:		06/19/2023
+ ************************************************************************/
+/**
+ * @NApiVersion 2.1
+ * @NScriptType UserEventScript
+ * @NModuleScope SameAccount
+ */
+
+// eslint-disable-next-line no-undef
+define(['N/record', 'N/search','N/log'],
+
+function(record, search,log) {
+
+    function beforeSubmit(context) {
+        var title= 'beforeSubmit ::';
+        var itemid,item,itemCount,itemLocation,itemRate,values,itemLocArray,itemsArray,itemSearchObj;
+        var itemloc,itemAvgCost;
+        var mapobj ={};
+        if (context.type !== context.UserEventType.CREATE && context.type !== context.UserEventType.EDIT)
+            return;
+        
+        var currentRecord = context.newRecord;
+        // Loop through each line item and calculate the average cost
+        itemCount = currentRecord.getLineCount({ sublistId: 'item' });
+        for (var i = 0; i < itemCount; i++) {
+            item = currentRecord.getSublistValue({ sublistId: 'item', fieldId: 'item', line: i });
+            /// delete line below for running on SO vs IF record
+            itemLocation = currentRecord.getSublistValue({ sublistId: 'item', fieldId: 'location', line: 0 });
+            itemRate = currentRecord.getSublistValue({ sublistId: 'item', fieldId: 'custcol_tcm_orig_trans_line_rate', line: i });
+
+            /// If the item Rate equals 0 OR the item Rate is NULL, then run search to get the location average cost
+            if (itemRate == 0 || itemRate == '') {
+
+                if(!mapobj[item]){
+                    mapobj[item] = {};
+                    mapobj[item].itemLocation =itemLocation;
+                    mapobj[item].item =item;
+                    mapobj[item].lineSequance =i;
+                }
+            } else {
+                currentRecord.setSublistValue({
+                    sublistId: 'item',
+                    fieldId: 'custcol_tcm_pj_ci_item_rate',
+                    line: i,
+                    value: itemRate
+                });
+            }
+        }
+        log.debug(title+'mapobj',mapobj);
+        if(Object.keys(mapobj).length){
+            values = Object.keys(mapobj).map(function(e) {
+                return mapobj[e];
+              });
+              itemLocArray = values.map(function(obj){
+                return obj.itemLocation;
+             });
+             itemLocArray = [...new Set(itemLocArray)];
+              itemsArray = values.map(function(obj){
+                return obj.item;
+             });
+             itemsArray = [...new Set(itemsArray)];
+             log.debug(title+'itemLocArray',itemLocArray);
+             log.debug(title+'itemsArray',itemsArray);
+
+            itemSearchObj = search.create({
+                type: "item",
+                filters:
+                [
+                   ["internalid","anyof",itemsArray], 
+                   "AND", 
+                   ["inventorylocation","anyof",itemLocArray]
+                ],
+                columns:
+                [
+                   search.createColumn({name: "locationaveragecost", label: "Location Average Cost"}),
+                   search.createColumn({name: "inventorylocation", label: "inventorylocation"}),
+                   search.createColumn({name: "internalid", label: "Internal ID"})
+                ]
+             });
+
+             itemSearchObj.run().each(function(result){
+                // .run().each has a limit of 4,000 results
+                itemid = result.id;
+                itemloc = result.getValue({name: "inventorylocation"});
+                itemAvgCost = result.getValue({name: "locationaveragecost"});
+                if(mapobj[itemid].itemLocation == itemloc){
+                    mapobj[itemid].avgCost = itemAvgCost;
+                    currentRecord.setSublistValue({
+                                sublistId: 'item',
+                                fieldId: 'custcol_tcm_pj_ci_item_rate',
+                                line: mapobj[itemid].lineSequance,
+                                value: itemAvgCost
+                            });
+                }
+
+                return true;
+             });
+             log.debug(title+'mapobj :: END',mapobj);
+        }
+    }
+
+    return {
+        beforeSubmit: beforeSubmit
+    };
+
+});

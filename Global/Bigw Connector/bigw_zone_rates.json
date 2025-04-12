@@ -1,0 +1,597 @@
+{
+    "N0": {
+        "rate": 0.451622088,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 51.51740289,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 99.69664365,
+            "next": {
+                "rate": 0.54681561,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 75.33692558
+            }
+        }
+    },
+    "N1": {
+        "rate": 1.021410421,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 69.01694526,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 98.07189642,
+            "next": {
+                "rate": 0.99624156,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 95.59448676
+            }
+        }
+    },
+    "GF": {
+        "rate": 1.181197686,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 74.31790945,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 98.8958018,
+            "next": {
+                "rate": 1.071059975,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 119.9306017
+            }
+        }
+    },
+    "WG": {
+        "rate": 0.903388213,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 66.47540084,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 102.7239905,
+            "next": {
+                "rate": 1.009480756,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 127.4957335
+            }
+        }
+    },
+    "NC": {
+        "rate": 0.986013,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 66.82761781,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 100.2622606,
+            "next": {
+                "rate": 0.959262288,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 128.5933615
+            }
+        }
+    },
+    "CB": {
+        "rate": 1.031891907,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 66.64262639,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 95.37894489,
+            "next": {
+                "rate": 1.495125154,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 84.38152692
+            }
+        }
+    },
+    "N3": {
+        "rate": 0.801759925,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 63.62546931,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 100.2243357,
+            "next": {
+                "rate": 1.318672798,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 109.1327649
+            }
+        }
+    },
+    "N4": {
+        "rate": 1.517724,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 81.62734106,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 94.15102275,
+            "next": {
+                "rate": 1.382372,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 107.84885
+            }
+        }
+    },
+    "N2": {
+        "rate": 1.609962365,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 86.23493934,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 93.40979162,
+            "next": {
+                "rate": 1.670986619,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 116.895334
+            }
+        }
+    },
+    "V0": {
+        "rate": 0.266645388,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 44.98811148,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 98.42875744,
+            "next": {
+                "rate": 0.285316949,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 75.73975928
+            }
+        }
+    },
+    "V1": {
+        "rate": 0.895324752,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 69.69607229,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 104.067747,
+            "next": {
+                "rate": 1.04864784,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 120.6461134
+            }
+        }
+    },
+    "GL": {
+        "rate": 0.562259657,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 59.69011817,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 105.1491789,
+            "next": {
+                "rate": 1.184482296,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 121.0852012
+            }
+        }
+    },
+    "BR": {
+        "rate": 0.904978286,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 70.28157086,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 106.4872286,
+            "next": {
+                "rate": 0.8043975,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 134.8110625
+            }
+        }
+    },
+    "V3": {
+        "rate": 0.565611429,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 56.49588,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 101.8644429,
+            "next": {
+                "rate": 1.204941111,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 119.8320556
+            }
+        }
+    },
+    "V2": {
+        "rate": 1.361179128,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 86.72477993,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 104.3093073,
+            "next": {
+                "rate": 2.095309372,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 115.1153234
+            }
+        }
+    },
+    "Q0": {
+        "rate": 0.718559538,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 58.55368877,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 99.79265268,
+            "next": {
+                "rate": 0.83419,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 74.48125
+            }
+        }
+    },
+    "Q1": {
+        "rate": 1.526259625,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 83.89663325,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 96.34944854,
+            "next": {
+                "rate": 1.149809489,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 121.7743331
+            }
+        }
+    },
+    "IP": {
+        "rate": 1.288356015,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 75.94013059,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 94.02489076,
+            "next": {
+                "rate": 1.116302152,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 122.6262317
+            }
+        }
+    },
+    "GC": {
+        "rate": 1.158697525,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 69.62570711,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 93.16266923,
+            "next": {
+                "rate": 1.113378395,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 134.8109543
+            }
+        }
+    },
+    "Q5": {
+        "rate": 1.055808,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 65.839104,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 93.929688,
+            "next": {
+                "rate": 1.151976667,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 119.8320556
+            }
+        }
+    },
+    "SC": {
+        "rate": 1.410076334,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 78.27189703,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 95.30301584,
+            "next": {
+                "rate": 1.226955147,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 140.2273795
+            }
+        }
+    },
+    "Q2": {
+        "rate": 2.037792601,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 100.3951905,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 92.86428646,
+            "next": {
+                "rate": 1.616717708,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 117.8867741
+            }
+        }
+    },
+    "Q3": {
+        "rate": 2.412185994,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 113.9989665,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 94.50022781,
+            "next": {
+                "rate": 2.070116195,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 111.7880253
+            }
+        }
+    },
+    "Q4": {
+        "rate": 3.231920215,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 148.62354,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 108.241192,
+            "next": {
+                "rate": 2.256038166,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 117.4404166
+            }
+        }
+    },
+    "S0": {
+        "rate": 0.467798926,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 50.95359679,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 98.96309722,
+            "next": {
+                "rate": 0.537408029,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 76.42678527
+            }
+        }
+    },
+    "S1": {
+        "rate": 1.225944643,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 73.55076848,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 96.35282897,
+            "next": {
+                "rate": 0.903514856,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 120.834875
+            }
+        }
+    },
+    "S2": {
+        "rate": 1.684684874,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 96.24452909,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 101.9264821,
+            "next": {
+                "rate": 1.382584911,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 122.6399835
+            }
+        }
+    },
+    "W0": {
+        "rate": 1.400940059,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 72.95727874,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 87.91333578,
+            "next": {
+                "rate": 1.444798937,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 62.58728315
+            }
+        }
+    },
+    "W1": {
+        "rate": 2.934097383,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 130.1366933,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 98.87309839,
+            "next": {
+                "rate": 1.616813916,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 90.21544154
+            }
+        }
+    },
+    "W2": {
+        "rate": 5.541308946,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 219.1513678,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 114.2892661,
+            "next": {
+                "rate": 2.898111866,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 116.5266022
+            }
+        }
+    },
+    "W3": {
+        "rate": 5.807000994,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 227.4379098,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 115.3310408,
+            "next": {
+                "rate": 4.568234922,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 112.7781545
+            }
+        }
+    },
+    "T0": {
+        "rate": 1.54664443,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 92.67404343,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 102.0642104,
+            "next": {
+                "rate": 1.270733912,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 109.8170964
+            }
+        }
+    },
+    "T1": {
+        "rate": 1.808507356,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 119.2381822,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 119.4167577,
+            "next": {
+                "rate": 1.431816237,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 112.9079473
+            }
+        }
+    },
+    "NT1": {
+        "rate": 3.003675198,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 137.6603584,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 102.9205441,
+            "next": {
+                "rate": 1.659720548,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 84.1419881
+            }
+        }
+    },
+    "NT2": {
+        "rate": 5.200939819,
+        "weight_start": 0,
+        "weight_end": 55,
+        "basic": 279.4140139,
+        "next": {
+            "weight_start": 55.01,
+            "weight_end": 90,
+            "basic": 183.6707967,
+            "next": {
+                "rate": 2.991167,
+                "weight_start": 90.01,
+                "weight_end": 10000,
+                "basic": 107.84885
+            }
+        }
+    }
+}

@@ -1,0 +1,57 @@
+/**
+ *@NApiVersion 2.0
+ *@NScriptType UserEventScript
+ */
+define(['N/log', 'N/search'], function (log, search) {
+
+    function beforeSubmit(context) {
+        var title = 'beforeSubmit(::)';
+        var rec = context.newRecord;
+        try {
+            var itemCount = rec.getLineCount({
+                sublistId: 'item'
+            });
+          log.debug({
+                    title: 'itemCount',
+                    details: itemCount
+                });
+            for (var i = 0; i <= itemCount; i++) {
+                var itemId = rec.getSublistValue({
+                    sublistId: 'item',
+                    fieldId: 'item',
+                  	line: i
+                }); log.debug({
+                    title: 'itemCountitemId',
+                    details:itemId
+                });
+               log.debug({
+                    title: 'itemCount',
+                    details: itemCount
+                });
+                var thumbnailUrl = search.lookupFields({
+                    type: 'item',
+                    id: itemId,
+                    columns: ['custitem_item_imge1']
+                });
+                log.debug({
+                    title: 'thumbnailUrl',
+                    details: thumbnailUrl
+                });
+                rec.setSublistValue({
+                    sublistId: 'item',
+                    fieldId: 'custcol_item_thumbnail_url',
+                     line: i,
+                    value: 'https://5746266-sb1.app.netsuite.com'+thumbnailUrl.custitem_item_imge1[0].text
+                });
+            }
+        } catch (e) {
+            log.debug('Exception ' + title, e.message);
+        }
+
+    }
+
+
+    return {
+        beforeSubmit: beforeSubmit
+    }
+});

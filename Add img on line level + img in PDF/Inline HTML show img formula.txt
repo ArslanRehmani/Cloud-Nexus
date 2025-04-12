@@ -1,0 +1,7 @@
+Inline HTML field type formula 
+
+CASE WHEN {custcol_ext_img_url} IS NOT NULL THEN '<img src="'||{custcol_ext_img_url}||'" height="50px" width="50px" />' ELSE '-' END"
+
+
+PDF show img line 
+<#if item.custcol_ext_img_url?length != 0><img style="width:90px;height:90px;" src="${item.custcol_ext_img_url}"/>

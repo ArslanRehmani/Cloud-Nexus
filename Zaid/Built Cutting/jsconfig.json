@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "checkJs": true,
+        "lib": [
+            "es2019",
+            "dom"
+        ],
+        "module": "amd",
+        "moduleResolution": "classic",
+        "paths": {
+            "lib/*": [
+                "lib/*"
+            ]
+        },
+        "target": "es2019"
+    }
+}

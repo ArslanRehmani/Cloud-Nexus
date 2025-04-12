@@ -1,0 +1,175 @@
+<pdf>
+    <head>
+    <meta name="author" value="Global Fitness and Leisure"/>
+    <meta name="title" value="GFL Assembly Terms and Conditions"/>
+    <meta name="subject" value="GFL Assembly Terms and Conditions"/>
+    <meta name="layout" value="one-column"/>
+    <link type="stylesheet" src="https://nsopen.s3-ap-southeast-2.amazonaws.com/bfo/gfl_job_card_bfo_style.css"/>
+    </head>
+    <body size="A4">
+    <div align="center">
+    <img src="https://nsopen.s3-ap-southeast-2.amazonaws.com/bfo/GFL.jpg"/>
+    </div>
+    <h1 align="center">GFL Assembly Terms and Conditions</h1>
+    <h2>The following Terms and Conditions are binding to you (the Customer) and apply to the proposed assembly (the Service). Your consent to proceed with the Service is an acknowledgement that you have read and understood these Terms and Conditions.</h2>
+    <div>
+    <p>1. The Customer provides consent for the Service provider to enter the Customer’s premises.</p>
+    <p>2. Service can only be completed on the ground floor with level access. Upstairs, downstairs, and difficult to access areas may require two people and special arrangements must be made. Additional fees will apply at GFL’s discretion.</p>
+    <p>3. The Customer accepts responsibility that, prior to the commencement of the works, all furniture and belongings are removed from the area of the Service and any carpet in the Service area is rolled back.</p>
+    <p>4. GFL technicians take great care with your property, however, GFL will accept no responsibility for loss of, theft of, or damage to goods or damage caused to your home during the course of the Service.</p>
+    <p>5. The Customer accepts responsibility to keep the Service area free from any children, pets or obstacles that could interfere with the Service or cause a safety hazard.</p>
+    <p>6. GFL will leave the work area in the same state as when they arrived. All product packaging will be placed in one agreed location on the property. If prior arrangements have been made to order a skip, the Service provider will place all product packaging in said skip providing it is located within 4 metres of the property.</p>
+    <p>7. All units, items and accessories will be assembled and installed to the specifications outlined in the relevant product manual instructions and as per the applicable standards.</p>
+    <p>8. All items will be visually checked for signs of external damage only prior to and on the completion of the service.</p>
+    </div>
+    <h2>Booking</h2>
+    <div>
+    <p>9. Any Service request will be made by appointment between 10:00am to 3:00pm Monday to Friday, excluding public holidays.</p>
+    <p>10. All Services are only available to the Melbourne and Sydney Metropolitan area.</p>
+    <p>11. At the completion of the job the Customer will be asked to approve a Service Sign Off Form attesting to the satisfactory completion of works.</p>
+    <p>12. GFL will endeavour to perform the Service on the dates agreed upon between GFL and the Customer. However, these dates are arranged as estimates only and GFL will accept no liability for any delay in meeting such dates or schedules.</p>
+    <p>13. Any cancellations or changes to your appointment time must be made 24 hours prior, so GFL can reallocate resources and support other customers. Failure to do so could result in the initial call out fee being applicable.</p>
+    </div>
+    <h2>Fees</h2>
+    <div>
+    <p>14. Any additional work requested by the Customer will be payable to GFL, either at the standard package price of that item or at the half-hourly rate of $40.</p>
+    <p>15. In the event of a delay to the installation resulting in unproductive time exceeding 15 minutes, the Customer will pay for that time at the half-hourly rate outlined above.</p>
+    <p>16. If during the installation the Customer requests the Service provider to relocate preinstalled items the cost of relocation will be determined by the half hourly rate of $40, payable to GFL.</p>
+    </div>
+    <pbr/>
+    <h2>Rectifying Issues with Service or Product</h2>
+    <div>
+    <p>17. Any issues relating to the product should be directed to GFL for review.</p>
+    <p>18. GFL will undertake remedial work as a direct result of poor workmanship that is identified by the customer within 7 days of the date of the completion of the services.</p>
+    </div>
+    <h2>Liability</h2>
+    <div>
+    <p>19. GFL excludes all liability in respect of any indirect or consequential loss, any loss of profit, use, anticipated savings, goodwill, reputation or business contracts, claims brought against the Customer by any third party, or any other form of pure economic loss whether arising in contract, tort (including negligence or otherwise).</p>
+    <p>20. GFL exclude all liability in respect of any loss, damage or liability of any kind suffered by the Customer or any third party directly or indirectly caused by modifications, adjustment, repairs or remedial work carried out by you or third parties without our prior written approval.</p>
+    <p>21. GFL’s total liability in respect to negligent damage to property is restricted to items being assembled or installed by the Service provider whilst in their care, custody and control.</p>
+    <p>22. The estimate of fees has been calculated on the basis that GFL can exclude or limit liability as set out in these Terms and Conditions. The Customer confirms that they will bear themselves (or insure against) any loss for which GFL have excluded or limited liability.</p>
+    <p>23. Nothing in these Terms and Conditions will operate to exclude or limit GFL’s liability to the Customer or any third party in respect of GFL technician’s negligence as covered by legislation in Australia or in the state in which the Service was performed.</p>
+    <p>24. By signing below the Customer agrees to these Terms and Conditions and consents for the GFL provider to commence assembly. The Customer also agrees that any variances from a standard professional service (outlined above) will be their financial responsibility.</p>
+    </div>
+    
+    <P margin-top="20">By accepting these Terms and Conditions, The Customer provides consent for GFL to book your Service. The Customer also agrees that any variances from the standard Service (outlined above) will be The Customer’s financial responsibility.</P>
+    
+    <div class="${action}">
+    <pbr/>
+    <h1 align="center">GFL Assembly Terms and Conditions</h1>
+    <table class="recordtable" width="100%" border="1" margin-bottom="20">
+    <tr>
+    <td border-bottom="1" border-right="1" width="15%">ID</td>
+    <td border-bottom="1" border-right="1" width="35%">${customrecord.name}</td>
+    <td border-bottom="1" rowspan="5" border-right="1" width="5%">ADDRESS</td>
+    <td border-bottom="1" rowspan="5" width="45%">${customrecord.custrecord_gfl_job_card_address}</td>
+    </tr>
+    <tr>
+    <td border-bottom="1" border-right="1" width="15%">TYPE</td>
+    <td border-bottom="1" border-right="1" width="35%">${customrecord.custrecord_gfl_job_card_type}</td>
+    </tr>
+    <tr>
+    <td border-bottom="1" border-right="1" width="15%">DATE TIME</td>
+    <td border-bottom="1" border-right="1" width="35%">${customrecord.custrecord_gfl_job_card_date} ${customrecord.custrecord_gfl_job_card_time}</td>
+    </tr>
+    <tr>
+    <td border-bottom="1" border-right="1">NAME</td>
+    <td border-bottom="1" border-right="1">
+    <#if customrecord.custrecord_gfl_job_card_customer.firstname?has_content>
+    ${customrecord.custrecord_gfl_job_card_customer.firstname}
+    </#if>
+    <#if customrecord.custrecord_gfl_job_card_customer.lastname?has_content>
+    ${" " + customrecord.custrecord_gfl_job_card_customer.lastname}
+    </#if>
+    </td>
+    </tr>
+    <tr>
+    <td border-bottom="1" border-right="1">CASE ID</td>
+    <td border-bottom="1" border-right="1"><span letter-spacing="0" align="center">${customrecord.custrecord_gfl_job_card_case.casenumber}</span></td>
+    </tr>
+    <tr border-bottom="1">
+    <td border-right="1">SALES HISTORY</td>
+    <td border-right="1">${customrecord.custrecord_gfl_job_card_sales}</td>
+    <td border-right="1">PHONE</td>
+    <td>${customrecord.custrecord_gfl_job_card_phone}</td>
+    </tr>
+    <tr border-bottom="1">
+    <td border-right="1">ITEM</td>
+    <!-- <td border-right="1">${customrecord.custrecord_gfl_job_card_item.salesdescription}</td> -->
+    <td border-right="1">
+    ${customrecord.custrecord_gfl_job_card_item}
+    </td>
+    <td border-right="1">WARRANTY</td>
+    <td>${customrecord.custrecord_gfl_job_card_warranty}</td>
+    </tr>
+    <tr>
+    <td rowspan="2" border-right="1" justification-ratio="0" letter-spacing="0">ADDITIONAL ITEMS</td>
+    <td border-right="1" rowspan="2"> <!-- Multiple selection is treated as string in Freemarker -->
+    <!-- ${customrecord.custrecord_gfl_job_card_addt_item?contains("\n")} yes -->
+    <!-- ${customrecord.custrecord_gfl_job_card_addt_item.salesdescription} empty -->
+    <!-- <#list customrecord.custrecord_gfl_job_card_addt_item.split("\n") as aitem>
+    ${aitem}
+    </#list>
+    empty
+    -->
+    <#assign additems = customrecord.custrecord_gfl_job_card_addt_item?word_list>
+    <#list additems as word>${word}<br/></#list>
+    </td>
+    <td border-bottom="1" border-right="1">MONEY TO BE COLLECTED</td>
+    <td border-bottom="1">${customrecord.custrecord_gfl_job_card_fee_applied}</td>
+    </tr>
+    <tr>
+    <td border-right="1">SCOPE OF WORK</td>
+    <td height="40">${customrecord.custrecord_gfl_job_card_scope}</td>
+    </tr>
+    </table>
+    <P>By signing below, you are agreeing to the <b>GFL Assembly Terms and Conditions</b>, and consent for the GFL technician to commence Service. You also agree that any variances from a standard professional Service (outlined above) will be your financial responsibility.</P>
+    
+    <table class="signature" cellpadding-left="0" cellpadding-top="10" cellpadding-bottom="10" cellmargin="0" width="100%">
+    <tr>
+    <td border-top="1" border-left="0" width="50%">Name</td>
+    <td width="10%"></td>
+    <td width="40%"></td>
+    </tr>
+    <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+    <tr>
+    <td border-top="1" border-left="0">Signature</td>
+    <td></td>
+    <td border-top="1" border-left="0">Date</td>
+    </tr>
+    </table>
+    
+    <P margin-top="20">By signing below, you have stated that the Service is now completed to your satisfaction.</P>
+    
+    <table class="signature" cellpadding-left="0" cellpadding-top="10" cellpadding-bottom="10" cellmargin="0" width="100%">
+    <tr>
+    <td border-top="1" border-left="0" width="50%">Name</td>
+    <td width="10%"></td>
+    <td width="40%"></td>
+    </tr>
+    <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+    <tr>
+    <td border-top="1" border-left="0">Signature</td>
+    <td></td>
+    <td border-top="1" border-left="0">Date</td>
+    </tr>
+    </table>
+    
+    <P margin-top="20">JOB COMPLETED BY</P>
+    <P class="borderp"></P>
+    
+    <P margin-top="20">REMARKS</P>
+    <p class="borderp"></p>
+    <p class="borderp"></p>
+    <p class="borderp"></p>
+    </div>
+    </body>
+    </pdf>
