@@ -2,14 +2,14 @@
  * @NApiVersion 2.1
  * @NScriptType MapReduceScript
  */
-define(['N/log', 'N/record', 'N/https', 'N/search', '../lib/dropship_request_lib.js', '../lib/dropship_ns_data_lib.js'],
+define(['N/log', 'N/record', 'N/https', 'N/search', '../lib/dropship_request_lib.js', '../lib/dropship_ns_data_lib.js', 'N/runtime'],
     /**
  * @param{log} log
  * @param{record} record
  * @param{https} https
  * @param{search} search
  */
-    (log, record, https, search, requestLib, nsDataLib) => {
+    (log, record, https, search, requestLib, nsDataLib, runtime) => {
 
         const getInputData = (inputContext) => {
             var title = 'getInputData[::]';
@@ -39,22 +39,31 @@ define(['N/log', 'N/record', 'N/https', 'N/search', '../lib/dropship_request_lib
                 var lasttName = customerObj.lastname;
                 var fullName = firstName + ' ' + lasttName;
 
+                // get parameters from MR scripts 
+                var script = runtime.getCurrentScript();
+                var emailRecepient = script.getParameter({ name: 'custscript_param_error_notification' });
+
                 //Function to check customer exits ot not
                 var customerFoundResult = nsDataLib.HELPERS.customerFound(fullName);
-                
+
+                log.debug({
+                    title: 'customerFoundResult===',
+                    details: customerFoundResult
+                });
+
                 if (customerFoundResult == 0) {// customer not found
-                    
-                    var custId = nsDataLib.HELPERS.createCustomerRecord(fullName, customerObj);
+
+                    var custId = nsDataLib.HELPERS.createCustomerRecord(fullName, customerObj, emailRecepient);
 
                     //Create Sales Order
-                    nsDataLib.HELPERS.createSalesOrder(data, custId);
+                    nsDataLib.HELPERS.createSalesOrder(data, custId, emailRecepient);
                 } else {
                     //create Sales Order if Customer exit
                     log.debug({
                         title: 'if Customer exits',
                         details: 'YES'
                     });
-                    nsDataLib.HELPERS.createSalesOrder(data, customerFoundResult);
+                    nsDataLib.HELPERS.createSalesOrder(data, customerFoundResult, emailRecepient);
                 }
             } catch (e) {
                 log.error(title + e.name, e.message);

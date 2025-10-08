@@ -27,6 +27,7 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
          * @Since 2015.2
          */
         function onRequest(context) {
+            context.response.setHeader('Content-Type', 'text/javascript'); //Set response for jsonp
             var inventoryResult = {
                 inventory: new Array(),
                 error: new Array()
@@ -48,7 +49,7 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                     extraColumnFields = requestBody.fields;
                 }
             }
-            // log.debug('extraColumnFields MW', extraColumnFields);
+            // log.audit('extraColumnFields MW', extraColumnFields);
             var source = contextRequest.parameters['source'];
             log.debug('source', source)
             var itemKeyType = contextRequest.parameters['item_key_type'] || '';
@@ -94,6 +95,7 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                 log.debug('item array', (itemArrayRules));
 
                 var itemIDTypeObject = getItemIDType(itemKeyType, itemArray, searchPreFilters);
+                log.debug('itemIDTypeObject', itemIDTypeObject)
 
                 var inventoryPartInternalidArray = _.map(itemIDTypeObject.inventory_part, 'internalid');
                 var kitInternalidArray = _.map(itemIDTypeObject.kit_package, 'internalid');
@@ -125,7 +127,7 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                 if (kitInternalidArray.length > 0) {
 
                     var kitInventoryArray = getKitsInventory(kitInternalidArray, locationArray, extraColumnFields);
-                    // log.debug('kit inventory Array', JSON.stringify(kitInventoryArray));
+                    log.debug('kit inventory Array', JSON.stringify(kitInventoryArray));
                     itemInventoryArray = _.concat(itemInventoryArray, kitInventoryArray);
                 }
 
@@ -255,6 +257,8 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
             filtersArray.push(['inventorylocation.internalid', 'anyof', locationArray]);
             filtersArray.push('AND');
             filtersArray.push(['internalid', 'anyof', inventoryPartInternalidArray]);
+            filtersArray.push('AND');
+            filtersArray.push(['isinactive', 'is', "F"]);
             // log.debug('filters Array', JSON.stringify(filtersArray));
             // getInventory(filtersArray);
 
@@ -339,9 +343,7 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                         var enforceStockBuffer = result.getValue('custitem_enforce_stock_buffer');
                         var assemblyHours = result.getValue('custitem_assemblyhours');
                         var fmsWebsiteStatus = result.getValue('custitem_website_free_shipping');
-                        var fmsZonePrices = []
-                        if (fmsWebsiteStatus) {
-                            fmsZonePrices = {
+                        var fmsZonePrices = {
                                 zone1: result.getValue('custitem_fs_hnol_metro'),
                                 zone2: result.getValue('custitem_fs_hnol_rural'),
                                 zone3: result.getValue('custitem_fs_hnol_remote'),
@@ -349,7 +351,7 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                                 zone5: result.getValue('custitem_6zone_5'),
                                 zone6: result.getValue('custitem_6zone_6')
                             }
-                        }
+                        
 
                         if (itemType == 'InvtPart') {
 
@@ -424,14 +426,16 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
         }
 
         function getKitsInventory(kitInternalidArray, locationArray, extraColumnFields) {
-
+            log.audit('kitInternalidArray', kitInternalidArray)
             var kitInventoryArray = new Array();
             var searchFilters = [
                 ['internalid', 'anyof', kitInternalidArray],
                 'AND',
-                ['memberitem.inventorylocation', 'anyof', locationArray]
+                ['memberitem.inventorylocation', 'anyof', locationArray],
+                'AND',
+                ['isinactive', 'is', "F"]
             ];
-
+            log.audit('searchFilters', searchFilters)
             var searchColumns = [
                 // 0
                 search.createColumn({
@@ -599,7 +603,6 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
             //         summary: search.Summary.GROUP
             //     }));
             // })
-
             var kitSearch = search.create({
                 type: search.Type.ITEM,
                 filters: searchFilters,
@@ -615,7 +618,7 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                 for (var i = 0; i < kitSearchPageRanges.length; i++) {
                     var currentPage = kitSearchPageData.fetch(i);
                     currentPage.data.forEach(function (result) {
-                        // log.debug('kit result', JSON.stringify(result));
+                        log.debug('kit result', result.getValue(kitSearch.columns[3]));
                         var locationQuantityAvailable = parseFloat(result.getValue(kitSearch.columns[3]));
                         var quantity = _.isNaN(locationQuantityAvailable) ? 0 : _.floor(locationQuantityAvailable);
                         var kitInventoryObj = {
@@ -663,7 +666,6 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
             }
 
             return kitInventoryArray;
-
         }
 
         function getMatrixChildrenInventory(matrixInternalidArray, locationArray, itemMatrixOption, extraColumnFields) {
@@ -774,7 +776,7 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                     });
                 }
             }
-            // log.debug('matrixChildInventoryArray', matrixChildInventoryArray)
+            log.debug('matrixChildInventoryArray', matrixChildInventoryArray)
             return matrixChildInventoryArray;
         }
 
@@ -853,7 +855,7 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                     originColumns.push(search.createColumn(column));
                 }
             })
-
+            log.audit('originColumns', originColumns)
             return originColumns;
         }
 
@@ -883,7 +885,6 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                     }
                 }
             });
-            log.debug('columnOptionsArr', columnOptionsArr);
             return _.compact(columnOptionsArr);
         }
 
@@ -927,9 +928,10 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                 ]
             });
             var itemSearchPageData = itemSearch.runPaged({ pageSize: 1000 });
+            log.audit('itemSearchPageData.count', itemSearchPageData.count);
             if (itemSearchPageData.count > 0) {
                 var itemSearchPageRanges = itemSearchPageData.pageRanges;
-
+                log.audit('itemSearchPageRanges.length', itemSearchPageRanges.length);
                 for (var i = 0; i < itemSearchPageRanges.length; i++) {
                     var currentPage = itemSearchPageData.fetch(i);
                     currentPage.data.forEach(function (result) {
@@ -964,10 +966,6 @@ define(['N/search', '/SuiteScripts/Lib-NS/lodash-4.13.1.min', 'N/record'],
                 inventory_part: inventoryPartArray,
                 kit_package: kitArray
             }
-
-
-
-
         }
 
         function getItemSKU(itemFullName) {

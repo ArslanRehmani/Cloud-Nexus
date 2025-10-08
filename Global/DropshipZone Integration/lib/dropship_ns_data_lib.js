@@ -74,9 +74,13 @@ define(['N/log', 'N/record', 'N/runtime', 'N/search', 'N/file', 'N/email'],
                     log.error(title + e.name, e.message);
                 }
             },
-            createSalesOrder: (data, id) => {
+            createSalesOrder: (data, id, emailRecepient) => {
                 var title = 'createSalesOrder[::]';
                 try {
+                    log.debug({
+                        title: 'emailRecepient + createSalesOrder',
+                        details: emailRecepient
+                    });
                     // var todayDSZorder = HELPERS.isToday(data.created_at);
                     // if (todayDSZorder == 'true' || todayDSZorder == true) {
                     var orderExistInNS = HELPERS.checkSOCreatedinNS(data.order_id);
@@ -90,7 +94,7 @@ define(['N/log', 'N/record', 'N/runtime', 'N/search', 'N/file', 'N/email'],
                         salesOrderObj.setValue({ fieldId: 'orderstatus', value: 'B' });//Pending Fulfillment
                         salesOrderObj.setValue({ fieldId: 'shipmethod', value: 34248 });// Australia Post
                         salesOrderObj.setValue({ fieldId: 'shippingcost', value: parseFloat(data.items[0].shipping_amount) });
-                        salesOrderObj.setValue({ fieldId: 'custbody_gfl_dropship_order_no', value: data.order_id });
+                        // salesOrderObj.setValue({ fieldId: 'custbody_gfl_dropship_order_no', value: data.order_id });
                         salesOrderObj.setValue({ fieldId: 'custbody1', value: data.order_id });
 
                         //set Line Level Data
@@ -149,7 +153,7 @@ define(['N/log', 'N/record', 'N/runtime', 'N/search', 'N/file', 'N/email'],
                                             recipients: 'james.h@gflgroup.com.au',//PRD
                                             // recipients: 'muhammad.w@gflgroup.com.au',// SB
                                             subject: 'Item does not contain DropshipZone Price Level',
-                                            body: e.message + '\n [SKU] has an invalid price level for DropshipZhone \n \n Order number [' + data.order_id + ']'
+                                            body: e.message + '\n [SKU] has an invalid price level for DropshipZhone \n \n Order number ['+data.order_id+']'
                                         });
                                     }
                                 } else {
@@ -188,11 +192,22 @@ define(['N/log', 'N/record', 'N/runtime', 'N/search', 'N/file', 'N/email'],
 
                 } catch (e) {
                     log.error(title + e.name, e.message);
+                    email.send({
+                        // author: 11342794,//SB
+                        author: 11923863,//PRD
+                        recipients: emailRecepient,
+                        subject: 'Drop Ship Zone'+ e.name,
+                        body: e.message
+                    });
                 }
             },
-            createCustomerRecord: (name, obj) => {
+            createCustomerRecord: (name, obj, emailRecepient) => {
                 var title = 'createCustomerRecord[::]';
                 try {
+                    log.debug({
+                        title: 'emailRecepient===',
+                        details: emailRecepient
+                    });
                     var stateObj = {
                         'Australian Capital Territory': 'ACT',
                         'New South Wales': 'NSW',
@@ -264,6 +279,13 @@ define(['N/log', 'N/record', 'N/runtime', 'N/search', 'N/file', 'N/email'],
                     return custRecordId;
                 } catch (e) {
                     log.error(title + e.name, e.message);
+                    email.send({
+                        // author: 11342794,//SB
+                        author: 11923863,//PRD
+                        recipients: emailRecepient,
+                        subject: 'Drop Ship Zone'+ e.name,
+                        body: e.message
+                    });
                 }
             },
             checkSOCreatedinNS: (orderid) => {

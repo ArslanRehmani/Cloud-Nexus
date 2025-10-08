@@ -1927,7 +1927,6 @@ function OnInitIfsPackageRecord(mode){
 
 function OnInitSO() {
     StartTime("OnInitSO");
-    nlapiLogExecution('debug', "123", "details");
     try{
 
         StartTime("getConfigWithSubsidiary");
@@ -2076,7 +2075,6 @@ function OnInitSO() {
 
                                          StartTime("load_itemfulfillment");
                                          nlapiLogExecution('debug', 'nlapiGetRecordId()', nlapiGetRecordId());
-
                                          var filter = new Array();
                                          filter[filter.length] = new nlobjSearchFilter('createdfrom', null, 'is', nlapiGetRecordId() );
                                          filter[filter.length] = new nlobjSearchFilter('custbody_avt_ifs_connote_num', null, 'isnotempty' );
@@ -2085,12 +2083,12 @@ function OnInitSO() {
                                          var cols = new Array();
                                          cols[cols.length] = new nlobjSearchColumn('internalid');
                                          cols[cols.length] = new nlobjSearchColumn('tranid');
-                                         cols[cols.length] = new nlobjSearchColumn('custbody_avt_ifs_shipcarrier');//custbody_avt_ifs_shipcarrier
+                                         cols[cols.length] = new nlobjSearchColumn('custbody_avt_ifs_shipcarrier');
                                          cols[cols.length] = new nlobjSearchColumn('custbody_avt_ifs_connote_num');
                                          cols[cols.length] = new nlobjSearchColumn('custbody_avt_ifs_trackingid');
 
                                          var searchresult = nlapiSearchRecord('itemfulfillment', null, filter, cols);
-                                         nlapiLogExecution('debug', "searchresult==", searchresult);
+                                        nlapiLogExecution('debug', "searchresult==", searchresult);
                                          EndTime("load_itemfulfillment");
                                          if (searchresult != null && searchresult.length > 0) {
                                              StartTime("custpage_if_link");

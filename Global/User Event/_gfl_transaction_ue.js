@@ -117,8 +117,13 @@ define(['N/search', 'N/record', 'N/file', 'N/runtime'],
                 if (context.type === context.UserEventType.CREATE) {
                     //  if (context.type === context.UserEventType.EDIT) {
                     if (currentRecord.type == 'salesorder') {
+                        log.debug({
+                            title: 'NEW SO',
+                            details: 'YES'
+                        });
 
                         transformIntoCashSalesInvoice(context);
+                        
                     }
 
                 }
@@ -956,8 +961,12 @@ define(['N/search', 'N/record', 'N/file', 'N/runtime'],
                         salesOrderObj.setValue({ fieldId: 'ordertype', value: 10 });//AFD: AX/HX/AP(VIC)
 
                     } else if ((shipViaNewText == 'Allied Express' || shipViaNewText == 'AirRoad Specialised') && (state == 'NSW')) {
+                        log.debug({
+                            title: 'TEST',
+                            details: '123456'
+                        });
 
-                        salesOrderObj.setValue({ fieldId: 'ordertype', value: 6 });//AFD: AX/HX (NSW)
+                        salesOrderObj.setValue({ fieldId: 'ordertype', value: 6 });//AFD: AX/AR (NSW)
 
                     } else if ((shipViaNewText == 'Allied Express' || shipViaNewText == 'AirRoad') && (state == 'QLD')) {
 

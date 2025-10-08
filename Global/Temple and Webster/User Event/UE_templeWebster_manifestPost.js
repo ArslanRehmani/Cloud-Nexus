@@ -20,7 +20,8 @@ define(['N/log', 'N/record', 'N/https', '../lib/temple_and_webster_lib'], functi
             });
             var twOrderId = rec.getValue({fieldId: 'custbody1'});
 
-            if(!manifiest && twOrderId && ifStatus == 'C' && customer == 1410049 && printLable == true){
+            // if(!manifiest && twOrderId && ifStatus == 'C' && customer == 1410049 && printLable == true){
+            if(!manifiest && twOrderId && ifStatus == 'C' && customer == 1410049){
                 log.debug({
                     title: 'manifiest',
                     details: manifiest

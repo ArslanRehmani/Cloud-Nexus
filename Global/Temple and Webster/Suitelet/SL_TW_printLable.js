@@ -24,7 +24,8 @@ define(['../lib/temple_and_webster_lib', 'N/redirect', 'N/record', 'N/search','N
                 details: twOrderId
             });
 
-            var data = tempWebLIB.printLable(twOrderId);
+            // var data = tempWebLIB.printLable(twOrderId);
+            var data = tempWebLIB.printLable(recId, twOrderId);
 
             log.debug({
                 title: "CS Print Lable Data",

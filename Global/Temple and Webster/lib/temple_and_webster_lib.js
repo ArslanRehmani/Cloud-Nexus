@@ -197,7 +197,7 @@ define(['N/log', 'N/https', 'N/record', 'N/search'], function (log, https, recor
                 log.error(title + e.name, e.message);
             }
         },
-        printLable: function (orderId) {
+        printLable: function (orderId, twOrderId) {
             var title = 'printLable[::]';
             try {
                 var tokenResponse = this.getToken();
@@ -239,25 +239,56 @@ define(['N/log', 'N/https', 'N/record', 'N/search'], function (log, https, recor
 
                     var consignment = [];
 
-                    if (printLableArray && printLableArray.length > 0) {
+                    // if (printLableArray && printLableArray.length > 0) {
 
+                    //     for (var i = 0; i < printLableArray.length; i++) {
+                    //         var item = printLableArray[i];
+
+                    //         // consignment.push({
+                    //         //     container_type: "Carton(s)",
+                    //         //     container_weight: item.netWeight ? parseFloat(item.netWeight) : 1, // Default to 0 if empty
+                    //         //     container_width: parseFloat(item.width),
+                    //         //     container_depth: parseFloat(item.totalLength),
+                    //         //     container_height: parseFloat(item.height),
+                    //         //     container_description: "mainbox"
+                    //         // });
+
+                    //         consignment.push({
+                    //             container_type: "Carton(s)",
+                    //             container_weight: item.netWeight ? parseFloat(item.netWeight) : 1, // Default to 1 if empty
+                    //             container_width: parseFloat(item.width) || '',
+                    //             container_depth: parseFloat(item.totalLength) || '',
+                    //             container_height: parseFloat(item.height) || '',
+                    //             // container_description: i === 0 ? "mainbox" : "secondary box"
+                    //             container_description: this.getBoxLabel(i)
+                    //         });
+                    //     }
+
+                    // }
+
+
+                    if (printLableArray && printLableArray.length > 0) {
+                        var boxIndex = 0;
                         for (var i = 0; i < printLableArray.length; i++) {
                             var item = printLableArray[i];
+                            var quantity = parseInt(item.quantity) || 1;
 
-                            consignment.push({
-                                container_type: "Carton(s)",
-                                container_weight: item.netWeight ? parseFloat(item.netWeight) : 1, // Default to 0 if empty
-                                container_width: parseFloat(item.width),
-                                container_depth: parseFloat(item.totalLength),
-                                container_height: parseFloat(item.height),
-                                container_description: "mainbox"
-                            });
+                            for (var j = 0; j < quantity; j++) {
+                                consignment.push({
+                                    container_type: "Carton(s)",
+                                    container_weight: item.netWeight ? parseFloat(item.netWeight) : 1,
+                                    container_width: parseFloat(item.width) || '',
+                                    container_depth: parseFloat(item.totalLength) || '',
+                                    container_height: parseFloat(item.height) || '',
+                                    container_description: this.getBoxLabel(boxIndex)
+                                });
+                                boxIndex++; // increment for each box, not just each item
+                            }
                         }
-
                     }
 
                     var printLableBody = {
-                        "purchase_order": orderId,
+                        "purchase_order": twOrderId,
                         "location_id": 23669,
                         "consignment": consignment
                     };
@@ -312,61 +343,152 @@ define(['N/log', 'N/https', 'N/record', 'N/search'], function (log, https, recor
             var title = 'printLableSeach[::]';
             var obj;
             var array = [];
+            // try {
+            //     var salesorderSearchObj = search.create({
+            //         type: "salesorder",
+            //         settings: [{ "name": "consolidationtype", "value": "ACCTTYPE" }],
+            //         filters:
+            //             [
+            //                 ["type", "anyof", "SalesOrd"],
+            //                 "AND",
+            //                 ["custbody1", "is", id],
+            //                 "AND",
+            //                 ["taxline", "is", "F"],
+            //                 "AND",
+            //                 ["shipping", "is", "F"],
+            //                 "AND",
+            //                 ["item", "noneof", "@NONE@"]
+            //             ],
+            //         columns:
+            //             [
+            //                 search.createColumn({ name: "tranid", label: "Document Number" }),
+            //                 search.createColumn({ name: "item", label: "Item" }),
+            //                 search.createColumn({
+            //                     name: "custitem_avt_total_width",
+            //                     join: "item",
+            //                     label: "Total Width (CM)"
+            //                 }),
+            //                 search.createColumn({
+            //                     name: "custitem_avt_total_height",
+            //                     join: "item",
+            //                     label: "Total Height (CM)"
+            //                 }),
+            //                 search.createColumn({
+            //                     name: "custitem_cubic_charge_weight",
+            //                     join: "item",
+            //                     label: "Charge Weight (KG)"
+            //                 }),
+            //                 search.createColumn({
+            //                     name: "custitem_avt_total_length",
+            //                     join: "item",
+            //                     label: "Total Length (CM)"
+            //                 })
+            //             ]
+            //     });
+            //     salesorderSearchObj.run().each(function (result) {
+            //         obj = {};
+            //         obj.width = result.getValue({ name: 'custitem_avt_total_width', join: 'item' });
+            //         obj.height = result.getValue({ name: 'custitem_avt_total_height', join: 'item' });
+            //         obj.netWeight = result.getValue({ name: 'custitem_cubic_charge_weight', join: 'item' });
+            //         obj.totalLength = result.getValue({ name: 'custitem_avt_total_length', join: 'item' });
+            //         array.push(obj);
+            //         return true;
+            //     });
+            // } catch (e) {
+            //     log.error(title + e.name, e.message);
+            // }
+            var title = 'printLableSeach[::]';
             try {
-                var salesorderSearchObj = search.create({
-                    type: "salesorder",
-                    settings: [{ "name": "consolidationtype", "value": "ACCTTYPE" }],
+                var itemSearchObj = search.create({
+                    type: "item",
                     filters:
                         [
-                            ["type", "anyof", "SalesOrd"],
+                            ["transaction.internalid", "anyof", id],
                             "AND",
-                            ["custbody1", "is", id],
+                            ["transaction.type", "anyof", "SalesOrd"],
                             "AND",
-                            ["taxline", "is", "F"],
+                            ["transaction.shipping", "is", "F"],
                             "AND",
-                            ["shipping", "is", "F"],
+                            ["transaction.taxline", "is", "F"],
                             "AND",
-                            ["item", "noneof", "@NONE@"]
+                            ["transaction.mainline", "is", "F"],
+                            "AND",
+                            ["type", "noneof", "Kit"]
                         ],
                     columns:
                         [
-                            search.createColumn({ name: "tranid", label: "Document Number" }),
-                            search.createColumn({ name: "item", label: "Item" }),
                             search.createColumn({
-                                name: "custitem_avt_total_width",
-                                join: "item",
-                                label: "Total Width (CM)"
+                                name: "tranid",
+                                join: "transaction",
+                                label: "Document Number"
+                            }),
+                            search.createColumn({ name: "itemid", label: "Name" }),
+                            search.createColumn({ name: "displayname", label: "Display Name" }),
+                            search.createColumn({ name: "type", label: "Type" }),
+                            search.createColumn({ name: "custitem_avt_total_height", label: "Total Height (CM)" }),
+                            search.createColumn({ name: "custitem_avt_total_length", label: "Total Length (CM)" }),
+                            search.createColumn({ name: "custitem_avt_total_width", label: "Total Width (CM)" }),
+                            search.createColumn({ name: "custitem_cubic_charge_weight", label: "Charge Weight (KG)" }),
+                            search.createColumn({
+                                name: "quantity",
+                                join: "transaction",
+                                label: "Quantity"
                             }),
                             search.createColumn({
-                                name: "custitem_avt_total_height",
-                                join: "item",
-                                label: "Total Height (CM)"
-                            }),
-                            search.createColumn({
-                                name: "custitem_cubic_charge_weight",
-                                join: "item",
-                                label: "Charge Weight (KG)"
-                            }),
-                            search.createColumn({
-                                name: "custitem_avt_total_length",
-                                join: "item",
-                                label: "Total Length (CM)"
+                                name: "formulanumeric",
+                                formula: "CASE WHEN {transaction.item} = 'EXERCISE : ACCESSORIES & ATTACHMENTS : CONSUMABLES : SILSPRAY' THEN 1 ELSE {transaction.quantity}END",
+                                label: "Quantity"
                             })
                         ]
                 });
-                salesorderSearchObj.run().each(function (result) {
+
+                itemSearchObj.run().each(function (result) {
                     obj = {};
-                    obj.width = result.getValue({ name: 'custitem_avt_total_width', join: 'item' });
-                    obj.height = result.getValue({ name: 'custitem_avt_total_height', join: 'item' });
-                    obj.netWeight = result.getValue({ name: 'custitem_cubic_charge_weight', join: 'item' });
-                    obj.totalLength = result.getValue({ name: 'custitem_avt_total_length', join: 'item' });
+                    obj.width = result.getValue({ name: 'custitem_avt_total_width' });
+                    obj.height = result.getValue({ name: 'custitem_avt_total_height' });
+                    obj.netWeight = result.getValue({ name: 'custitem_cubic_charge_weight' });
+                    obj.totalLength = result.getValue({ name: 'custitem_avt_total_length' });
+                    // obj.quantity = result.getValue({ name: 'quantity', join: 'transaction' });
+                    obj.quantity = result.getValue({ name: 'formulanumeric', formula: "CASE WHEN {transaction.item} = 'EXERCISE : ACCESSORIES & ATTACHMENTS : CONSUMABLES : SILSPRAY' THEN 1 ELSE {transaction.quantity}END" });
                     array.push(obj);
                     return true;
                 });
+
+                /*
+                itemSearchObj.id="customsearch1751525447224";
+                itemSearchObj.title="Custom Item Search 6 (copy)";
+                var newSearchId = itemSearchObj.save();
+                */
             } catch (e) {
                 log.error(title + e.name, e.message);
             }
             return array || [];
+        },
+        getBoxLabel: function (index) {
+            const labels = [
+                "main box",
+                "secondary box",
+                "tertiary box",
+                "quaternary box",
+                "quinary box",
+                "senary box",
+                "septenary box",
+                "octonary box",
+                "nonary box",
+                "denary box",
+                "undecenary box",
+                "duodecenary box",
+                "tredecenary box",
+                "quattuordecenary box",
+                "quindecenary box",
+                "sexdecenary box",
+                "septendecenary box",
+                "octodecenary box",
+                "novemdecenary box",
+                "vigenary box"
+            ];
+
+            return labels[index]; // fallback if more than 10
         }
 
     };

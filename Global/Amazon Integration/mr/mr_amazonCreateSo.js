@@ -172,9 +172,14 @@ define(['../dao/amazon_config_dao', 'N/https', 'N/search', 'N/record', '../lib/a
                     isDynamic: true
                 });
 
+                salesOrderObj.setValue({ fieldId: 'customform', value: 189 });// SB form name GFL Sales Order - invoice
                 salesOrderObj.setValue({ fieldId: 'entity', value: custId });
                 salesOrderObj.setValue({ fieldId: 'subsidiary', value: 1 });//  GFL
-                salesOrderObj.setValue({ fieldId: 'externalid', value: amazonOrderId });
+                salesOrderObj.setValue({ fieldId: 'memo', value: amazonOrderId });
+                // salesOrderObj.setValue({ fieldId: 'shipmethod', value: 13712 });// PRD Best Available
+                // salesOrderObj.setValue({ fieldId: 'custbody1', value: amazonOrderId });
+                // salesOrderObj.setValue({ fieldId: 'otherrefnum', value: 'Amazon Integration' });
+                // salesOrderObj.setValue({ fieldId: 'location', value: 15 });
 
                 for (var m = 0; m < itemDataLength.length; m++) {
 

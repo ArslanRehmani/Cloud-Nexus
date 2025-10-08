@@ -1,0 +1,472 @@
+<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+	<link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSansArabic_Regular}" src-bold="${nsfont.NotoSansArabic_Bold}"
+            src-italic="${nsfont.NotoSansArabic_Italic}" src-bolditalic="${nsfont.NotoSansArabic_BoldItalic}" bytes="2" />
+	<#if .locale == "zh_CN">
+		<link name="NotoSansCJKsc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKsc_Regular}" src-bold="${nsfont.NotoSansCJKsc_Bold}" bytes="2" />
+	<#elseif .locale == "zh_TW">
+		<link name="NotoSansCJKtc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKtc_Regular}" src-bold="${nsfont.NotoSansCJKtc_Bold}" bytes="2" />
+	<#elseif .locale == "ja_JP">
+		<link name="NotoSansCJKjp" type="font" subtype="opentype" src="${nsfont.NotoSansCJKjp_Regular}" src-bold="${nsfont.NotoSansCJKjp_Bold}" bytes="2" />
+	<#elseif .locale == "ko_KR">
+		<link name="NotoSansCJKkr" type="font" subtype="opentype" src="${nsfont.NotoSansCJKkr_Regular}" src-bold="${nsfont.NotoSansCJKkr_Bold}" bytes="2" />
+	<#elseif .locale == "th_TH">
+		<link name="NotoSansThai" type="font" subtype="opentype" src="${nsfont.NotoSansThai_Regular}" src-bold="${nsfont.NotoSansThai_Bold}" bytes="2" />
+	</#if>
+ <macrolist>
+        <macro id="nlheader">
+        </macro>
+        <macro id="nlfooter">
+            <table class="footer" style="width: 100%;"><tr></tr></table>
+        </macro>
+    </macrolist>
+    <style type="text/css">* {
+		font-family: NotoSans, sans-serif; font-feature-settings:opentype;
+		}
+        th {
+            font-weight: bold;
+            font-size: 6pt;
+            vertical-align: middle;
+            padding: 5px 6px 3px;
+            background-color: #e3e3e3;
+            color: #333333;
+            font-family: sans-serif;
+            font-size: 10pt;
+        }
+        td {
+            padding: 4px 6px;
+            background-color: white;
+            font-family: sans-serif;
+            font-size: 10pt;
+        }
+      td p {
+		align: left;
+		}
+        b {
+            font-weight: bold;
+            color: #333333;
+        }
+        table.header td {
+            padding: 0px;
+            font-size: 10pt;
+        }
+        table.footer td {
+            padding: 0px;
+            font-size: 8pt;
+        }
+        table.itemtable th {
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+      table.itemtable td {
+		padding-bottom: 5px;
+		padding-top: 5px;
+		}
+        table.body td {
+            padding-top: 2px;
+        }
+        table.total {
+            page-break-inside: avoid;
+        }
+        tr.totalrow {
+            background-color: #e3e3e3;
+            line-height: 200%;
+        }
+        td.totalboxtop {
+            font-size: 12pt;
+            background-color: #e3e3e3;
+        }
+        td.addressheader {
+            font-size: 8pt;
+            padding-top: 6px;
+            padding-bottom: 2px;
+        }
+        td.address {
+            padding-top: 0px;
+        }
+        td.totalboxmid {
+            font-size: 28pt;
+            padding-top: 20px;
+            background-color: #e3e3e3;
+        }
+        td.totalboxbot {
+            background-color: #e3e3e3;
+            font-weight: bold;
+        }
+        span.title {
+            font-size: 28pt;
+        }
+        span.number {
+            font-size: 20pt;
+        }
+        span.itemname {
+            line-height: 125%;
+        }
+        hr {
+            width: 100%;
+            color: #000000;
+            background-color: #000000;
+            height: 2pt;
+        }
+        </style>
+</head>
+<body header="nlheader" header-height="0mm" footer="nlfooter" footer-height="20pt" padding="0.25in 0.25in 0.25in 0.25in" size="A4">
+<table class="header" style="width: 100%; align: center; ">
+                <tr>
+                    <td rowspan="3" style="align: center; text-align: center;">
+                        <!--img src="${record.location.custrecord_tcs_pos_url}" style="float:center; margin: 7px" /-->
+                        <img src="https://5466906.app.netsuite.com/core/media/media.nl?id=2744&amp;c=5466906&amp;h=f609d673504a2f9036bf" style="float: center; margin: 7px; align: right; height: 120px; width:200px;" />
+                        <p font-size="12pt" align="center" font-family="sans-serif" text-align="center">
+                          <#if record.location.custrecord_tcs_pos_location_address?length !=0>${record.location.custrecord_tcs_pos_location_address}</#if><br/>
+                          <#if record.location.custrecord_tcs_pos_vat_no?length!=0>VAT#${record.location.custrecord_tcs_pos_vat_no}</#if><br/>
+                          <#if record.location.custrecord_tcspos_store_tele_number?length!=0>${record.location.custrecord_tcspos_store_tele_number}</#if><br/>
+                          <img src="https://5466906.app.netsuite.com/core/media/media.nl?id=2745&amp;c=5466906&amp;h=f55465415c48120a4b8f" style="float: center; margin: 7px; align: right; height: 30px; width:200px;" /><br/>
+                          <p style="font-size:10pt; float: center;"><strong>فاتورة ضريبية مبسطة</strong></p><br/>
+                          <p style="font-size:10pt; float: center;"><strong>Simplified Tax Invoice</strong></p><br/>
+                          
+                        </p>
+                    </td>
+                </tr>
+            </table>
+  <hr/>
+<table style="width: 100%; margin-top: 10px;">
+  <#assign totalSavings=0>
+<#assign text= "&#123;&quot;invoice&quot;:&#91;&#123; &quot;invoice&quot;:&quot;"+record.tranid +"&quot;,&quot;phone&quot;:&quot;"+record.entity.phone+"&quot;,&quot;id&quot;:&quot;"+record.entity.entityid+"&quot;,&quot;name&quot;:&quot;"+record.entity.altname+"&quot;&#125;&#93;, &quot;items&quot;:&#91;">
+
+  <#list record.item as item>
+        <#if item_index==0>
+            <thead>
+                <tr>
+                <th width="30%">${item.item@label}</th>
+                  <th width="15%" >Unit</th>
+                <th width="15%" >Qty</th>
+                  <th width="20%" >Unit Price</th>
+                <th width="20%" >Total Price</th>
+                </tr>
+            </thead>
+        </#if>
+        <tr>
+          <td>
+                   <#if item.custcol_tcspos_notes?has_content>
+                   ${item.description} | ${item.custcol_tcspos_notes}
+                   <#else>
+                   ${item.description}
+                   </#if>
+          </td>
+          <td vertical-align="top"  >${item.units}</td>
+          <td vertical-align="top"  >${item.quantity?string("0.00")}</td>
+          <td vertical-align="top"  >${item.rate?string("0.00")}</td>
+          <td vertical-align="top"  >${item.amount?string("0.00")}</td>
+        </tr>
+      <#assign totalSavings=totalSavings + item.custcol_tcspos_line_discount>
+<#if item.quantity != 0 && item.custcol_upc_code !="LMD0001" >
+<#assign text=text+ "&#123;&quot;sku&quot;:&quot;"+item.custcol_upc_code+"&quot;,&quot;qty&quot;:&quot;"+item.quantity+"&quot;,&quot;width&quot;:&quot;"+item.custcolwidth+"&quot;&#125;,">
+</#if>
+
+<#assign invoice = {
+  "invoice": record.tranid,
+  "phone": record.custbody_customer_contact,
+  "id": record.entity,
+  "name": record.entity.name
+} />
+
+<#assign items = [] />
+<#list record.item as item>
+  <#assign itemData = 
+    '{' +
+    '"sku": "' + item.name + '",' +
+    '"qty": "' + item.quantity?string("0") + '",' +
+    '"width": "' + item.custcolwidth + '"' +
+    '"note2": "' + item.note2 + '"' +
+    '}'
+  />
+  <#assign items += [itemData] />
+</#list>
+
+<#assign itemsString = items?join(",") />
+
+<#assign qrData = 
+  '{' +
+  '"invoice": [' +
+  '{' +
+  '"invoice": "' + record.tranid + '",' +
+  '"phone": "' + record.custbody_customer_contact + '",' +
+  '"id": "' + record.entity + '",' +
+  '"name": "' + record.entity.name + '"' +
+  '}' +
+  '],' +
+  '"items": [' + itemsString + ']' +
+  '}'
+/>
+  
+
+<#assign qrDataEncoded = qrData?url('UTF-8') />
+
+
+        </#list>
+    
+   
+        <!-- end items -->
+<#assign text=text+"&#93;&#125;">  
+        </table>
+<hr/>
+
+<table border="0" class="total" style="margin-top:10px;width:100%;">
+    <tr>
+       <td align="left" colspan="17">Total (Excl. Vat)</td>
+        <td align="right" colspan="4">  ${record.subtotal?string("0.00")}</td>
+      <td><img src='https://5466906.app.netsuite.com/core/media/media.nl?id=404068&amp;c=5466906&amp;h=Mfwgg7YlzPMkoSSv6uq_XezFQoO5rz0Bb-v6Fxzsd4b8rtEf' width='12px' height='12px' style='padding: 0px;'/></td>
+    </tr>
+   <tr>
+       <td align="left" colspan="17">Discounts</td>
+        <td align="right" colspan="4">${record.discounttotal?string("0.00")}</td>
+     <td><img src='https://5466906.app.netsuite.com/core/media/media.nl?id=404068&amp;c=5466906&amp;h=Mfwgg7YlzPMkoSSv6uq_XezFQoO5rz0Bb-v6Fxzsd4b8rtEf' width='12px' height='12px' style='padding: 0px;'/></td>
+    </tr>
+    <tr>
+ <td align="left" colspan="17">Vat (15%)</td>
+        <td align="right" colspan="4">  ${record.taxtotal?string("0.00")}</td>
+      <td><img src='https://5466906.app.netsuite.com/core/media/media.nl?id=404068&amp;c=5466906&amp;h=Mfwgg7YlzPMkoSSv6uq_XezFQoO5rz0Bb-v6Fxzsd4b8rtEf' width='12px' height='12px' style='padding: 0px;'/></td>
+    </tr>
+  <tr>
+  <td align="left" colspan="17">Total</td>
+        <td align="right" colspan="4">  ${record.total?string("0.00")}</td> 
+    <td><img src='https://5466906.app.netsuite.com/core/media/media.nl?id=404068&amp;c=5466906&amp;h=Mfwgg7YlzPMkoSSv6uq_XezFQoO5rz0Bb-v6Fxzsd4b8rtEf' width='12px' height='12px' style='padding: 0px;'/></td>
+    </tr>
+</table>
+
+<hr/>
+<table style="width: 100%;">
+  <tr>
+        <td rowspan="1" style="text-align: center; align: center;">
+         ${record.entity}
+         </td>
+    </tr>
+  <tr>
+        <td rowspan="1" style="text-align: center; align: center;">
+         ${record.entity.phone}
+         </td>
+    </tr>
+  <tr>
+        <td rowspan="1" style="text-align: center; align: center;">
+         ${record.billaddress}
+         </td>
+    </tr>
+    <tr>
+        <td rowspan="1" style="text-align: center; align: center;">
+         <barcode codetype="code128" showtext="true" value="${record.tranid}" jsbarcode-value="${record.tranid}" jsbarcode-height="30">  </barcode>
+        </td>
+
+    </tr>
+  </table>
+
+<table style="width: 100%;">
+
+
+
+
+
+
+  <tr>
+
+ <#assign sampledata= 'Company Name : ' + ' Shebal Trading Company ' + '&#xA;' + 'VAT No : ' + ' 300046348300003 ' + '&#xA;' + 'Date &amp; Time : ' + record.custbody8 + '&#xA;' + 'Sub Total Without VAT : ' +  record.subtotal + '&#xA;' +'VAT Amount : ' + record.taxtotal + '&#xA;' + 'Gross Amt : ' + record.total >
+      <td width="40%"></td>
+
+
+    <td width="30%" rowspan="4" style="text-align: center; align: center;"><barcode codetype="qrcode" height="100px" width="100px" showtext="true" value="${record.custpage_qr_content_for_invoice}" jsbarcode-value="${record.custbody_e_invoice_qr_code}" jsbarcode-height="100px" jsbarcode-width="100px"></barcode>
+   </td>
+     <td width="40%"></td>
+        
+       
+    </tr>
+     <tr>
+      <td rowspan="1" colspan='3' style="align: center; text-align: center;">
+                           <img id="qrcode"  src=  "https://qrcode.tec-it.com/API/QRCode?data=${qrDataEncoded}" style="width:150px; height: 150px;" /> 
+       
+
+
+
+                    </td>
+   
+                </tr>
+  
+     <tr>
+      <td rowspan="1" colspan='3' style="align: center; text-align: center;">
+       
+                           <img id="qrcode"  src=  "https://qrcode.tec-it.com/API/QRCode?data=${qrDataEncoded}" style="width:150px; height: 150px;" /> 
+
+
+
+                    </td>
+       
+                </tr>
+
+    
+  </table>
+
+
+ 
+  
+
+
+
+
+
+
+
+
+  <table style="width:100%; align: left;">
+    <tr>
+        <td colspan="1" style="text-align: left; align: left;">Cashier: ${record.salesrep.entityid}<br /></td>
+      <td colspan="1" style="text-align: left; align: left;">Invoice# ${record.tranid}<br /></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align: left; align: left;">Date: ${record.createddate}</td>
+          </tr>
+</table>
+<table align="center" style="width:100%; font-size:6pt; line-height:12px; font-family: Arial, sans-serif; border-collapse: collapse;">
+  
+  <tr>
+    <td style="width:12%; vertical-align: top; padding: 8px 5px; border-right: 1px solid #ccc; 
+               text-align: right; color: rgb(198,89,17); font-weight: bold; 
+               word-break: break-word; white-space: normal;" dir="rtl">
+      شروط<br/>الاستبدال<br/>والاسترجاع
+    </td>
+    <td style="width:88%; vertical-align: top; padding: 8px 10px; text-align: right;" dir="rtl">
+      <ul style="margin:0; padding-left: 15px;">
+        <li>طلبات الفروع يمكن استرجاعها او استبدالها من الفروع.</li>
+        <li>يحق للعميل طلب الاستبدال أو الاسترجاع خلال 14 يومًا من تاريخ الاستلام (لا يشمل خدمة التفصيل).</li>
+        <li>يجب أن يكون المنتج في نفس حالة الاستلام والتغليف الأصلي.</li>
+        <li>لا يمكن استبدال أو استرجاع الخامات أو الطاقات بعد القص.</li>
+        <li>يتم رفع طلب إعادة المبلغ بعد استلام المنتج والتأكد من سلامته، وتحويل المبلغ خلال 14 يومًا.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width:12%; vertical-align: top; padding: 8px 5px; border-right: 1px solid #ccc; 
+               text-align: right; color: rgb(198,89,17); font-weight: bold; 
+               word-break: break-word; white-space: normal;" dir="rtl">
+      آلية<br/>الاسترجاع<br/>والاستبدال
+    </td>
+    <td style="width:88%; vertical-align: top; padding: 8px 10px; text-align: right;" dir="rtl">
+      <ul style="margin:0; padding-left: 15px;">
+        <li>التواصل مع خدمة العملاء عبر حساباتنا الرسمية.</li>
+        <li>تزوردنا: رقم الفاتورة + صورة المنتج المراد استرجاعه.</li>
+        <li>رفع الطلب في النظام.</li>
+        <li>خلال 24 ساعة عمل سيتم إرسال رقم بوليصة الشحن.</li>
+        <li>يجب تسليم المنتج لشركة الشحن خلال 5 أيام من تاريخ استلام البوليصة.</li>
+        <li>بعد استلام المنتج والتأكد من سلامته، يتم شحن المنتج البديل.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width:12%; vertical-align: top; padding: 8px 5px; border-right: 1px solid #ccc; 
+               text-align: right; color: rgb(198,89,17); font-weight: bold; 
+               word-break: break-word; white-space: normal;" dir="rtl">
+      إلغاء<br/>وتعديل<br/>الطلب
+    </td>
+    <td style="width:88%; vertical-align: top; padding: 8px 10px; text-align: right;" dir="rtl">
+      <ul style="margin:0; padding-left: 15px;">
+        <li>تعديل أو إلغاء الطلب عبر ممثل خدمة العملاء (الهاتف، الواتساب، أو الحسابات الرسمية).</li>
+        <li>📞 رقم خدمة العملاء: 920014121</li>
+        <li>لا يُقبل الإلغاء بعد موافقة العميل على الثوب التجريبي.</li>
+        <li>تأخر رفع المقاسات أو الموافقة على البروفة لأكثر من 5 أيام قد يؤدي لإلغاء الطلب.</li>
+        <li>إعادة المبلغ خلال 14 يومًا من الموافقة على طلب الإرجاع.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width:12%; vertical-align: top; padding: 8px 5px; border-right: 1px solid #ccc; 
+               text-align: right; color: rgb(198,89,17); font-weight: bold; 
+               word-break: break-word; white-space: normal;" dir="rtl">
+      الشروط<br/>والأحكام<br/>للعروض<br/>والمواسم
+    </td>
+    <td style="width:88%; vertical-align: top; padding: 8px 10px; text-align: right;" dir="rtl">
+      <ul style="margin:0; padding-left: 15px;">
+        <li>نظام النقاط والكوبونات والأكواد غير مفعّل أثناء العروض أو الخصومات.</li>
+        <li>الوقت المتوقع لتفصيل الثوب في المواسم قد يصل إلى 30 يوم عمل.</li>
+        <li>العروض الخاصة بتعدد الثياب مخصصة لفرد واحد فقط.</li>
+        <li>طلبات الاسترجاع أو الاستبدال قد تبدأ معالجتها بعد 10 أيام من تاريخ الطلب بسبب كثرة الطلبات.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width:12%; vertical-align: top; padding: 8px 5px; border-right: 1px solid #ccc; 
+               text-align: right; color: rgb(198,89,17); font-weight: bold; 
+               word-break: break-word; white-space: normal;" dir="rtl">
+      سياسة<br/>التعديل<br/>والضمان<br/>والإلغاء<br/>(خدمة<br/>التفصيل)
+    </td>
+    <td style="width:88%; vertical-align: top; padding: 8px 10px; text-align: right;" dir="rtl">
+      <ul style="margin:0; padding-left: 15px;">
+        <li>ضمان ريتشي للمواد الأولية لمدة 24 شهرًا مع اتباع تعليمات الغسيل.</li>
+        <li>التعديل على الثوب خلال 10 أيام من الاستلام، لمرة واحدة مجانا.</li>
+        <li>لا تعديل على الثياب التالفة بسوء الاستخدام أو بعد 10 أيام.</li>
+        <li>لا تعديلات خلال شهر رمضان.</li>
+        <li>إلغاء خدمة التفصيل خلال 9 ساعات من إصدار الفاتورة فقط.</li>
+        <li>قنوات طلب التعديل: زيارة المعارض مع المنتج بحالته الأصلية.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width:12%; vertical-align: top; padding: 8px 5px; border-right: 1px solid #ccc; 
+               text-align: right; color: rgb(198,89,17); font-weight: bold; 
+               word-break: break-word; white-space: normal;" dir="rtl">
+      تعليمات<br/>الغسيل<br/>والكي
+    </td>
+    <td style="width:88%; vertical-align: top; padding: 8px 10px; text-align: right;" dir="rtl">
+      <ul style="margin:0; padding-left: 15px;">
+        <li>الغسيل اليدوي أو الآلي بدرجة حرارة ≤ 30°م، بدون مبيضات، وعدم استخدام آلة التجفيف.</li>
+        <li>تجفيف في الظل بعيدًا عن الشمس.</li>
+        <li>الكي بدرجة حرارة ≤ 110°م، من الداخل أو مع قماش رطب.</li>
+        <li>التنظيف الجاف الاحترافي مسموح بدون مواد كيميائية قاسية.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width:12%; vertical-align: top; padding: 8px 5px; border-right: 1px solid #ccc; 
+               text-align: right; color: rgb(198,89,17); font-weight: bold; 
+               word-break: break-word; white-space: normal;" dir="rtl">
+      تعليمات<br/>خاصة<br/>للأصواف
+    </td>
+    <td style="width:88%; vertical-align: top; padding: 8px 10px; text-align: right;" dir="rtl">
+      <ul style="margin:0; padding-left: 15px;">
+        <li>يمنع الغسيل الآلي أو النقع الطويل.</li>
+        <li>غسل يدوي لطيف بماء بارد أو فاتر (&lt;30°م) مع منظف خاص.</li>
+        <li>لا تفرك أو تعصر القماش.</li>
+        <li>تجفيف مسطح في مكان جيد التهوية بعيد عن الشمس.</li>
+        <li>كي بدرجة حرارة منخفضة وبخار خفيف.</li>
+        <li>استخدام قطعة قماش بين المكواة والقماش.</li>
+        <li>يمنع الكي القوي على القماش الجاف.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width:12%; vertical-align: top; padding: 8px 5px; border-right: 1px solid #ccc; 
+               text-align: right; color: rgb(198,89,17); font-weight: bold; 
+               word-break: break-word; white-space: normal;" dir="rtl">
+      تعليمات<br/>للأشمغة
+    </td>
+    <td style="width:88%; vertical-align: top; padding: 8px 10px; text-align: right;" dir="rtl">
+      <ul style="margin:0; padding-left: 15px;">
+        <li>غسل بماء بارد ≤ 30°م.</li>
+        <li>يمنع استخدام المبيضات.</li>
+        <li>يمنع العصر أو اللوي.</li>
+        <li>يجفف مفرودًا في الظل.</li>
+        <li>الكي بدرجة حرارة ≤ 150°م.</li>
+        <li>تكوى العلامة التجارية من الداخل فقط.</li>
+        <li>يمنع استخدام ملين الأقمشة والتنظيف الجاف.</li>
+      </ul>
+    </td>
+  </tr>
+
+</table>
+
+  </body>
+</pdf>

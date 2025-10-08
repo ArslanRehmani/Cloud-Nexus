@@ -112,20 +112,32 @@ define(['N/https', 'N/log', '../lib/temple_and_webster_lib', 'N/search', 'N/reco
         function formateFromDate() {
             var title = 'formateFromDate[::]';
             try {
-                var date = new Date();
+                // var date = new Date();
 
-                // var year = date.getFullYear().toString() + "4"; // Append "4" to the year
-                var year = date.getFullYear().toString(); // Append "4" to the year
-                var month = date.getMonth() + 1; // Months are zero-indexed
-                var day = date.getDate(); // Get the day
+                // // var year = date.getFullYear().toString() + "4"; // Append "4" to the year
+                // var year = date.getFullYear().toString(); // Append "4" to the year
+                // var month = date.getMonth() + 1; // Months are zero-indexed
+                // var day = date.getDate(); // Get the day
 
-                // Add leading zeros to month and day if necessary
-                if (month < 10) {
-                    month = '0' + month;
-                }
-                if (day < 10) {
-                    day = '0' + day;
-                }
+                // // Add leading zeros to month and day if necessary
+                // if (month < 10) {
+                //     month = '0' + month;
+                // }
+                // if (day < 10) {
+                //     day = '0' + day;
+                // }
+
+                // return year + '-' + month + '-' + day;
+
+                var now = new Date();
+                var localTime = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
+
+                var year = localTime.getFullYear().toString();
+                var month = localTime.getMonth() + 1;
+                var day = localTime.getDate();
+
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
 
                 return year + '-' + month + '-' + day;
             } catch (e) {

@@ -351,6 +351,55 @@ define(['N/log', 'N/record', 'N/runtime', 'N/search', 'N/https', '../eBay_lib/eB
                     log.error(title + e.name, e.message);
                 }
                 return responseBody || ''
+            },
+            shipedIFineBay: (token, orderNumber, shipVia, trackingNum) => {
+                var title = 'shipedIFineBay[::]';
+                try {
+                    var headers = {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    };
+
+                    let body = { /* ShippingFulfillmentDetails */
+                        "lineItems": [],
+                        "shippingCarrierCode": shipVia,
+                        "trackingNumber": trackingNum
+                    }
+
+                    //get Single order for lineItemId
+                    let responseLineItemId = https.get({
+                        url: 'https://api.ebay.com/sell/fulfillment/v1/order/'+orderNumber+'',
+                        headers: headers
+                    });
+                    let responseBodyLineItemId = JSON.parse(responseLineItemId.body);
+
+                    let dataLength = responseBodyLineItemId.lineItems.length;
+
+                    for (var l = 0; l <= dataLength; l++) {
+
+                        let itemId = responseBodyLineItemId.lineItems[l];
+                        
+                        if (itemId && itemId != '') {
+
+                            body.lineItems.push({
+                                lineItemId: itemId.lineItemId
+                            });
+
+                        }
+                    }
+
+                    let response = https.post({
+                        url: 'https://api.ebay.com/sell/fulfillment/v1/order/'+orderNumber+'/shipping_fulfillment',
+                        body: JSON.stringify(body),
+                        headers: headers
+                    });
+
+                    log.debug('Response', response);
+
+                } catch (e) {
+                    log.error(title + e.name, e.message);
+                }
             }
 
         }
